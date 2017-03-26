@@ -4,7 +4,7 @@
 * @flow
 */
 
-import { Component } from "react"
+import React from "react"
 import {
   AppRegistry,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
   View
 } from "react-native"
 
-export default class CandleLight extends Component {
+export default class CandleLight extends React.Component {
   render() {
     return (
       <View style={styles.container}>
