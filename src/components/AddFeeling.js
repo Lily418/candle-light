@@ -13,8 +13,10 @@ import {
 
 import Button from 'react-native-button';
 
+import Navigation from './Navigation'
 
-export default class CandleLight extends React.Component {
+
+export default class AddFeeling extends React.Component {
   
   feelingButtonPressed(newSection) {
     this.props.changeFeelingSection(newSection)
@@ -47,20 +49,26 @@ export default class CandleLight extends React.Component {
 
       <View style={styles.feelingButtonsContainer}>
       { wordsToDisplay ? 
-        wordsToDisplay.map((word) => 
-          <Button containerStyle={styles.feelingButtonContainerStyle}
+        wordsToDisplay.map((word, index) => 
+          <Button key={`feeling-button-${index}`} containerStyle={styles.feelingButtonContainerStyle}
                   style={styles.feelingButtonTextStyle}>{word}</Button>
         )
         : null
       }
       </View>
       
+      <View style={styles.navContainer}>
+        <Navigation />
+      </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  navContainer: {
+    flex: 0.1,
+  },
   positiveButtonContainerStyle: {
     padding:10,
     height:45, 
@@ -84,11 +92,12 @@ const styles = StyleSheet.create({
     height:45, 
     overflow:'hidden', 
     backgroundColor: 'white',
-    margin: 10,
-    width: 100
+    margin: 4,
+    width: 120,
+    elevation: 2
   },
   feelingButtonTextStyle: {
-    fontSize: 12, 
+    fontSize: 16 , 
     fontWeight: 'normal',
     color: '#5f5963'
   },
@@ -99,22 +108,24 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF",
-    alignItems: "center"
+    backgroundColor: "white",
+    alignItems: "stretch"
   },
   sentimentButtonContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flex: 0.2
   },
   feelingButtonsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+    alignSelf: 'center',
+    flex: 0.7
   },
   title: {
-    padding: 10,
-    paddingTop: 20,
     fontSize: 30,
     textAlign: "center",
     margin: 10,
+    flex: 0.1
   }
 })
