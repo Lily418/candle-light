@@ -18,8 +18,13 @@ import Navigation from './Navigation'
 
 export default class AddFeeling extends React.Component {
   
-  feelingButtonPressed(newSection) {
+  sentimentButtonPressed(newSection) {
     this.props.changeFeelingSection(newSection)
+  }
+
+  feelingButtonPressed(feelingName) {
+    this.props.wordSelected(feelingName)
+    this.props.navigator.push({ key: 'DescribeFeeling' })
   }
   
   render() {
@@ -36,13 +41,13 @@ export default class AddFeeling extends React.Component {
       <Button
         containerStyle={styles.positiveButtonContainerStyle}
         style={styles.sentimentButtonTextStyle}
-        onPress={this.feelingButtonPressed.bind(this, 'Positive')}>
+        onPress={this.sentimentButtonPressed.bind(this, 'Positive')}>
         Positive
       </Button>
       <Button
         containerStyle={styles.negativeButtonContainerStyle}
         style={styles.sentimentButtonTextStyle}
-        onPress={this.feelingButtonPressed.bind(this, 'Negative')}>
+        onPress={this.sentimentButtonPressed.bind(this, 'Negative')}>
         Negative
       </Button>
       </View>
@@ -51,7 +56,8 @@ export default class AddFeeling extends React.Component {
       { wordsToDisplay ? 
         wordsToDisplay.map((word, index) => 
           <Button key={`feeling-button-${index}`} containerStyle={styles.feelingButtonContainerStyle}
-                  style={styles.feelingButtonTextStyle}>{word}</Button>
+                  style={styles.feelingButtonTextStyle}
+                  onPress={this.feelingButtonPressed.bind(this, word)}>{word}</Button>
         )
         : null
       }

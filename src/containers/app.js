@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import * as reducers from '../modules'
 
 import AddFeeling from './AddFeelingContainer'
+import DescribeFeeling from './DescribeFeelingContainer'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const reducer = combineReducers(reducers)
@@ -14,6 +15,7 @@ const store = createStoreWithMiddleware(reducer)
 const getRouteComponent = (route) => {
   switch(route.key) {
       case 'AddFeeling': return AddFeeling
+      case 'DescribeFeeling': return DescribeFeeling
   }
 }
 

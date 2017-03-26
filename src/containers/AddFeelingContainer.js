@@ -1,6 +1,6 @@
 import AddFeeling from '../components/AddFeeling'
 import { connect } from 'react-redux'
-import { changeFeelingSection } from '../modules/feelings'
+import { changeFeelingSection, wordSelected } from '../modules/feelings'
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeFeelingSection: (newSection) => {
       dispatch(changeFeelingSection(newSection))
+    },
+    wordSelected: (selectedWord) => {
+      dispatch(wordSelected(selectedWord))
     }
   }
 }
