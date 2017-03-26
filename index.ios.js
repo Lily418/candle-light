@@ -13,6 +13,7 @@ export default class CandleLight extends React.Component {
   render() {
     return (
       <App />
+    )
   }
 }
 
