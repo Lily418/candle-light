@@ -1,5 +1,5 @@
-import counter from './counter'
+import feelings from './feelings'
 
 export {
-  counter
+  feelings
 }

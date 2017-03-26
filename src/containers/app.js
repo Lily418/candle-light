@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import * as reducers from '../modules'
 
-import AddFeeling from '../components/AddFeeling'
+import AddFeeling from './AddFeelingContainer'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const reducer = combineReducers(reducers)
