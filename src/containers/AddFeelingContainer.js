@@ -15,8 +15,8 @@ const mapDispatchToProps = (dispatch) => {
     changeFeelingSection: (newSection) => {
       dispatch(changeFeelingSection(newSection))
     },
-    wordSelected: (selectedWord) => {
-      dispatch(wordSelected(selectedWord))
+    wordSelected: (selectedWord, selectedSentiment) => {
+      dispatch(wordSelected(selectedWord, selectedSentiment))
     }
   }
 }

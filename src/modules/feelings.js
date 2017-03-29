@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const CHANGE_FEELING_SECTION = "CHANGE_FEELING_SECTION"
 const SELECT_WORD = "SELECT_WORD"
 const QUESTION_ANSWER_UPDATED = "QUESTION_ANSWER_UPDATED"
@@ -9,6 +11,7 @@ const initialState = {
   feelingWordsPositive: ["Uplifted", "Cared For" ,"Comfortable","Encouraged","Free","Happy","Secure","Loved","Social","Relaxed","Confident","Safe","Listened To","Supported","Respected","Energized"],
   feelingWordsNegative: ["Humiliated","Ignored","Pressured","Mocked","Controlled","Upset","Inadequte","Hurt","Isolated","Scared","Confused","Threatened","Manipulated","Used","Insignificant","Exhausted"],
   selectedWord: null,
+  selectedSentiment: null,
   questionAnswer: "",
   feelings: [{
     "sentiment" : "Positive",
@@ -32,10 +35,10 @@ export const changeFeelingSection = (showingSection) => {
   }
 }
 
-export const wordSelected = (selectedWord) => {
+export const wordSelected = (selectedWord, selectedSentiment) => {
   return {
     type: SELECT_WORD,
-    selectedWord
+    selectedWord, selectedSentiment
   }
 }
 
@@ -46,8 +49,19 @@ export const questionAnswerUpdated = (questionAnswer) => {
   }
 }
 
-export const saveFeeling = (feelingWord, feelingDescription) => {
-  
+export const saveFeeling = (description, sentiment, feelingWord, onComplete) => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const realm = state.realm.realm
+    realm.write(() => {
+      realm.create("FeelingRecord", {
+        description, sentiment, feelingWord,
+        created: moment().toDate(),
+      })
+    })
+
+    onComplete()
+  }
 }
 
 
@@ -62,7 +76,8 @@ export default function feelings(state = initialState, action = {}) {
     case SELECT_WORD:
       return {
         ...state,
-        "selectedWord": action.selectedWord
+        "selectedWord": action.selectedWord,
+        "selectedSentiment": action.selectedSentiment
       }
     case QUESTION_ANSWER_UPDATED:
       return {

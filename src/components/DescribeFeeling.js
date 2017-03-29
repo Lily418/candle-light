@@ -18,7 +18,12 @@ import Button from 'react-native-button';
 export default class DescribeFeeling extends React.Component {
 
   savePressed() {
-
+    const description = this.props.questionAnswer
+    const sentiment = this.props.selectedSentiment
+    const feelingWord = this.props.selectedWord
+    this.props.saveFeeling(description, sentiment, feelingWord, () => {
+      this.props.navigator.pop()
+    })
   }
 
   render() {

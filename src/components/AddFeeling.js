@@ -22,8 +22,8 @@ export default class AddFeeling extends React.Component {
     this.props.changeFeelingSection(newSection)
   }
 
-  feelingButtonPressed(feelingName) {
-    this.props.wordSelected(feelingName)
+  feelingButtonPressed(feelingName, sentiment) {
+    this.props.wordSelected(feelingName, sentiment)
     this.props.navigator.push({ key: 'DescribeFeeling' })
   }
   
@@ -57,7 +57,7 @@ export default class AddFeeling extends React.Component {
         wordsToDisplay.map((word, index) => 
           <Button key={`feeling-button-${index}`} containerStyle={styles.feelingButtonContainerStyle}
                   style={styles.feelingButtonTextStyle}
-                  onPress={this.feelingButtonPressed.bind(this, word)}>{word}</Button>
+                  onPress={this.feelingButtonPressed.bind(this, word, this.props.showingSection)}>{word}</Button>
         )
         : null
       }
