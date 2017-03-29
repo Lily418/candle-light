@@ -64,7 +64,7 @@ export default class AddFeeling extends React.Component {
       </View>
       
       <View style={styles.navContainer}>
-        <Navigation currentRoute={this.props.route} />
+        <Navigation currentRoute={this.props.route} navigator={this.props.navigator} />
       </View>
       </View>
     )

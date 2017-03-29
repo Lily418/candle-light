@@ -7,6 +7,7 @@ import * as reducers from '../modules'
 
 import AddFeeling from './AddFeelingContainer'
 import DescribeFeeling from './DescribeFeelingContainer'
+import Diary from './DiaryContainer'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const reducer = combineReducers(reducers)
@@ -16,6 +17,7 @@ const getRouteComponent = (route) => {
   switch(route.key) {
       case 'AddFeeling': return AddFeeling
       case 'DescribeFeeling': return DescribeFeeling
+      case 'Diary': return Diary
   }
 }
 

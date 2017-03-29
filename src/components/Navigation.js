@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight
 } from "react-native"
 
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -28,6 +29,10 @@ export default class Navigation extends React.Component {
     }
   }
 
+  navigateTo(routeKey) {
+    this.props.navigator.push({key: routeKey})
+  }
+
   render() {
   
     const addFeelingColor = this.getColor("AddFeeling", this.props.currentRoute)
@@ -35,20 +40,27 @@ export default class Navigation extends React.Component {
 
     return (
       <View style={styles.container}>
+      <TouchableHighlight style={styles.touchableHighlightStyle} onPress={this.navigateTo.bind(this, "AddFeeling")}>
         <View style={styles.navItemContainer}>
           <Icon name="plus" size={30} color={addFeelingColor} />
           <Text style={{color: addFeelingColor}}>Add</Text>
         </View>
+      </TouchableHighlight>
+      <TouchableHighlight style={styles.touchableHighlightStyle} onPress={this.navigateTo.bind(this, "Diary")}>
         <View style={styles.navItemContainer}>
           <Icon name="book" size={30} color={diaryColor} />
           <Text style={{color: diaryColor}}>Diary</Text>
         </View>
+      </TouchableHighlight>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  touchableHighlightStyle: {
+    flex: 1
+  },
   container: {
     flexDirection: 'row',
     flex: 1

@@ -17,12 +17,16 @@ import Button from 'react-native-button';
 
 export default class DescribeFeeling extends React.Component {
 
+  savePressed() {
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.headerStyle}>
           <Text style={styles.questionText}>What has made you feel {this.props.selectedWord.toLowerCase()}?</Text>
-          <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton}>SAVE</Button> 
+          <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton} onPress={this.savePressed.bind(this)}>SAVE</Button> 
         </View>
       <TextInput
         style={styles.questionAnswerInput}
