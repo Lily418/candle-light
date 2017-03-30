@@ -5,6 +5,7 @@ const SELECT_WORD = "SELECT_WORD"
 const QUESTION_ANSWER_UPDATED = "QUESTION_ANSWER_UPDATED"
 const START_FEELING_SAVE = "START_QUESTION_SAVE"
 const FEELING_SAVED = "QUESTION_SAVED"
+const LOADED_FEELINGS = "LOADED_FEELINGS"
 
 const initialState = {
   showingSection: null,
@@ -13,19 +14,7 @@ const initialState = {
   selectedWord: null,
   selectedSentiment: null,
   questionAnswer: "",
-  feelings: [{
-    "sentiment" : "Positive",
-    "feelingWord" : "Free",
-    "description": "Free Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna..."
-  }, {
-    "sentiment" : "Negative",
-    "feelingWord" : "Ignored",
-    "description": "Ignored Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna..."
-  }, {
-    "sentiment" : "Negative",
-    "feelingWord" : "Pressured",
-    "description": "Pressured Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna..."
-  }]
+  feelings: []
 }
 
 export const changeFeelingSection = (showingSection) => {
@@ -53,6 +42,9 @@ export const saveFeeling = (description, sentiment, feelingWord, onComplete) => 
   return (dispatch, getState) => {
     const state = getState()
     const realm = state.realm.realm
+
+    console.log(realm.path)
+
     realm.write(() => {
       realm.create("FeelingRecord", {
         description, sentiment, feelingWord,
@@ -64,6 +56,16 @@ export const saveFeeling = (description, sentiment, feelingWord, onComplete) => 
   }
 }
 
+export const loadFeelings = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const realm = state.realm.realm
+    return dispatch({
+      type: LOADED_FEELINGS,
+      feelings : realm.objects("FeelingRecord").snapshot().values()
+    })
+  }
+}
 
 
 export default function feelings(state = initialState, action = {}) {
@@ -83,6 +85,11 @@ export default function feelings(state = initialState, action = {}) {
       return {
         ...state,
         "questionAnswer": action.questionAnswer
+      }
+    case LOADED_FEELINGS:
+      return {
+        ...state,
+        feelings: action.feelings
       }
     default:
       return state

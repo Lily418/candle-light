@@ -20,10 +20,10 @@ export default class Diary extends React.Component {
   
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      feelingsDataSource: ds.cloneWithRows(this.props.feelings),
-    };
+  }
+
+  componentDidMount() {
+    this.props.loadFeelings()
   }
 
   getFeelingRecordStyle(feelingRecord) {
@@ -39,13 +39,13 @@ export default class Diary extends React.Component {
   }
   
   render() {
-    
-    const wordsToDisplay = this.props["feelingWords" + this.props.showingSection]
-    
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const feelingsDataSource = ds.cloneWithRows(this.props.feelings)
+        
     return (
       <View style={styles.container}>
-        <ListView
-        dataSource={this.state.feelingsDataSource}
+        {this.props.feelings.values ? <ListView
+        dataSource={feelingsDataSource}
         renderRow={(feelingRecord) =>
           <View>
           <View>
@@ -56,7 +56,7 @@ export default class Diary extends React.Component {
           </View>
           </View>
           }
-        />
+        /> : null}
         <View style={styles.navContainer}>
         <Navigation currentRoute={this.props.route}  navigator={this.props.navigator} />
         </View>
