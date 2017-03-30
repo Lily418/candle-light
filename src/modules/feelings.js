@@ -62,7 +62,7 @@ export const loadFeelings = () => {
     const realm = state.realm.realm
     return dispatch({
       type: LOADED_FEELINGS,
-      feelings : realm.objects("FeelingRecord").snapshot().values()
+      feelings : realm.objects("FeelingRecord").snapshot()
     })
   }
 }

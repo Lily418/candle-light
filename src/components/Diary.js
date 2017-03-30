@@ -5,6 +5,8 @@
 */
 
 import React from "react"
+import moment from "moment"
+
 import {
   StyleSheet,
   Text,
@@ -27,35 +29,54 @@ export default class Diary extends React.Component {
   }
 
   getFeelingRecordStyle(feelingRecord) {
+    const baseFeelingRecordStyle = {
+      flex: 0.85,
+      padding: 10
+    }
+
     if(feelingRecord.sentiment === "Positive") {
       return {
+        ...baseFeelingRecordStyle,
         "backgroundColor" : "#8dc73f"
       }
     } else {
       return {
+        ...baseFeelingRecordStyle,
         "backgroundColor" : "#c74c3f"
       }
     }
+  }
+
+  renderRow(feelingRecord) {
+  
+    const created = moment(feelingRecord.created)
+
+    return (
+      <View style={styles.feelingContainer}>
+      <View style={styles.feelingDate}>
+        <Text>{created.format("DD")}</Text>
+        <Text>{created.format("ddd")}</Text>
+      </View>
+      <View style={this.getFeelingRecordStyle(feelingRecord)}>
+        <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
+        <Text style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
+        <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
+      </View>
+      </View>
+    )
   }
   
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const feelingsDataSource = ds.cloneWithRows(this.props.feelings)
         
+    console.log(this.props.feelings)
+
     return (
       <View style={styles.container}>
-        {this.props.feelings.values ? <ListView
+        {this.props.feelings.length > 0 ? <ListView
         dataSource={feelingsDataSource}
-        renderRow={(feelingRecord) =>
-          <View>
-          <View>
-            
-          </View>
-          <View style={this.getFeelingRecordStyle(feelingRecord)}>
-            <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
-          </View>
-          </View>
-          }
+        renderRow={this.renderRow.bind(this)}
         /> : null}
         <View style={styles.navContainer}>
         <Navigation currentRoute={this.props.route}  navigator={this.props.navigator} />
@@ -75,6 +96,18 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   feelingDescriptionStyle: {
-    color: "white"
+    color: "white",
+    fontSize: 14
+  },
+  feelingWordStyle: {
+    color: "white",
+    fontSize: 16
+  },
+  feelingContainer: {
+    flexDirection: "row",
+  },
+  feelingDate: {
+    flex: 0.15,
+    padding: 5
   }
 })
