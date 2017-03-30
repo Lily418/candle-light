@@ -56,13 +56,32 @@ export const saveFeeling = (description, sentiment, feelingWord, onComplete) => 
   }
 }
 
+const addIsNewDate = (feelingRecords) => {
+  let previousCreated = null
+
+  let feelingRecordsWithIsNewDate = []
+
+  feelingRecords.forEach((feelingRecord) => {
+    const created = moment(feelingRecord.created)
+
+    feelingRecordsWithIsNewDate.push({
+      ...feelingRecord,
+      isNewDate: !previousCreated || previousCreated.format("DDddd") !== created.format("DDddd")
+    })
+
+    previousCreated = created
+  })
+
+  return feelingRecordsWithIsNewDate
+}
+
 export const loadFeelings = () => {
   return (dispatch, getState) => {
     const state = getState()
     const realm = state.realm.realm
     return dispatch({
       type: LOADED_FEELINGS,
-      feelings : realm.objects("FeelingRecord").snapshot()
+      feelings : addIsNewDate(realm.objects("FeelingRecord").snapshot())
     })
   }
 }

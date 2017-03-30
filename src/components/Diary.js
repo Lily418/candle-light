@@ -47,15 +47,36 @@ export default class Diary extends React.Component {
     }
   }
 
+  getFeelingContainerStyle(feelingRecord) {
+    const baseFeelingContainerStyle = {
+        flexDirection: "row",
+        marginBottom: 2,
+        marginRight: 5
+      }
+    
+    if(feelingRecord.isNewDate) {
+      return {
+        ...baseFeelingContainerStyle,
+        marginTop: 20
+      }
+    } else {
+      return {
+        ...baseFeelingContainerStyle,
+        marginTop: 2
+      }
+    }
+
+  }
+
   renderRow(feelingRecord) {
   
     const created = moment(feelingRecord.created)
-
+    
     return (
-      <View style={styles.feelingContainer}>
+      <View style={this.getFeelingContainerStyle(feelingRecord)}>
       <View style={styles.feelingDate}>
-        <Text>{created.format("DD")}</Text>
-        <Text>{created.format("ddd")}</Text>
+        {feelingRecord.isNewDate ? <Text>{created.format("DD")}</Text> : null}
+        {feelingRecord.isNewDate ? <Text>{created.format("ddd")}</Text> : null}
       </View>
       <View style={this.getFeelingRecordStyle(feelingRecord)}>
         <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
@@ -69,9 +90,7 @@ export default class Diary extends React.Component {
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const feelingsDataSource = ds.cloneWithRows(this.props.feelings)
-        
-    console.log(this.props.feelings)
-
+    
     return (
       <View style={styles.container}>
         {this.props.feelings.length > 0 ? <ListView
@@ -102,9 +121,6 @@ const styles = StyleSheet.create({
   feelingWordStyle: {
     color: "white",
     fontSize: 16
-  },
-  feelingContainer: {
-    flexDirection: "row",
   },
   feelingDate: {
     flex: 0.15,
