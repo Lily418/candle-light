@@ -9,6 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
+  Dimensions
 } from "react-native"
 
 import Button from 'react-native-button';
@@ -25,6 +27,27 @@ export default class AddFeeling extends React.Component {
   feelingButtonPressed(feelingName, sentiment) {
     this.props.wordSelected(feelingName, sentiment)
     this.props.navigator.push({ key: 'DescribeFeeling' })
+  }
+
+  maxWidthOfButton() {
+    const { width } = Dimensions.get('window')    
+    return (width / 3) - 20
+  }
+
+  getButtonStyle() {
+    const baseStyle = { 
+        padding: 10,
+        height: 45, 
+        overflow: 'hidden', 
+        backgroundColor: 'white',
+        margin: 4,
+        elevation: 2,
+        minWidth: 120
+      }
+
+    console.log(this.maxWidthOfButton())
+
+    return { ...baseStyle, width: this.maxWidthOfButton() }
   }
   
   render() {
@@ -52,16 +75,18 @@ export default class AddFeeling extends React.Component {
       </Button>
       </View>
 
-      <View style={styles.feelingButtonsContainer}>
-      { wordsToDisplay ? 
-        wordsToDisplay.map((word, index) => 
-          <Button key={`feeling-button-${index}`} containerStyle={styles.feelingButtonContainerStyle}
-                  style={styles.feelingButtonTextStyle}
-                  onPress={this.feelingButtonPressed.bind(this, word, this.props.showingSection)}>{word}</Button>
-        )
-        : null
-      }
+      <ScrollView style={styles.feelingButtonsScrollView}>
+        <View style={styles.feelingButtonsContainer}>
+        { wordsToDisplay ? 
+          wordsToDisplay.map((word, index) => 
+            <Button key={`feeling-button-${index}`} containerStyle={this.getButtonStyle.bind(this)()}
+                    style={styles.feelingButtonTextStyle}
+                    onPress={this.feelingButtonPressed.bind(this, word, this.props.showingSection)}>{word}</Button>
+          )
+          : null
+        }
       </View>
+      </ScrollView>
       
       <View style={styles.navContainer}>
         <Navigation currentRoute={this.props.route} navigator={this.props.navigator} />
@@ -73,7 +98,7 @@ export default class AddFeeling extends React.Component {
 
 const styles = StyleSheet.create({
   navContainer: {
-    flex: 0.1,
+    flex: 0.2
   },
   positiveButtonContainerStyle: {
     padding:10,
@@ -92,15 +117,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#c74c3f',
     flex: 0.5,
     margin: 10
-  },
-  feelingButtonContainerStyle: {
-    padding:10,
-    height:45, 
-    overflow:'hidden', 
-    backgroundColor: 'white',
-    margin: 4,
-    width: 120,
-    elevation: 2
   },
   feelingButtonTextStyle: {
     fontSize: 16 , 
@@ -125,13 +141,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    alignSelf: 'center',
-    flex: 0.7
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10
   },
   title: {
     fontSize: 30,
     textAlign: "center",
     margin: 10,
     flex: 0.1
+  },
+  feelingButtonsScrollView: {
+    flex: 0.7
   }
 })
