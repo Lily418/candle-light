@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigator } from 'react-native'
+import { Navigator, BackAndroid } from 'react-native'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
@@ -22,10 +22,35 @@ const getRouteComponent = (route) => {
 }
 
 export default class App extends React.Component {
+
+
+  constructor(props) {
+  super(props)
+  this.navigator = null;
+  }
+
+  handleBack() {
+    if (this.navigator && this.navigator.getCurrentRoutes().length > 1){
+      this.navigator.pop();
+      return true; //avoid closing the app
+    } 
+
+    return false; //close the app
+  }
+  
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.handleBack.bind(this));
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.handleBack);
+  }
+
   render() {
     return (
       <Provider store={store}>
         <Navigator
+          ref={navigator => {this.navigator = navigator}}
           initialRoute={{key: 'AddFeeling'}}
           renderScene={(route, navigator) => {
             const RouteComponent = getRouteComponent(route)
