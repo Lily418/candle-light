@@ -97,7 +97,7 @@ export default class Diary extends React.Component {
         dataSource={feelingsDataSource}
         renderRow={this.renderRow.bind(this)}
         style={styles.listViewStyle}
-        /> : null}
+        /> : <View style={{flex : 1}} />}
         <View style={styles.navContainer}>
         <Navigation currentRoute={this.props.route}  navigator={this.props.navigator} />
         </View>
