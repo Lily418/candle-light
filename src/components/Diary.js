@@ -96,6 +96,7 @@ export default class Diary extends React.Component {
         {this.props.feelings.length > 0 ? <ListView
         dataSource={feelingsDataSource}
         renderRow={this.renderRow.bind(this)}
+        style={styles.listViewStyle}
         /> : null}
         <View style={styles.navContainer}>
         <Navigation currentRoute={this.props.route}  navigator={this.props.navigator} />
@@ -113,6 +114,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "stretch"
+  },
+  listViewStyle: {
+    flex : 1
   },
   feelingDescriptionStyle: {
     color: "white",
