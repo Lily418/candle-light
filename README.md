@@ -3,6 +3,10 @@
 ## Purpose of the project
 Candlelight is an application to support people recovering from abusive relationships, like Fitbit helps you record your physical health Candlelight is a health tracker for your relationships to avoid a cycle of abusive relationships and help rebuild confidence.
 
+## Android Beta
+
+[Candlelight is avaliable on the Google Play Store](https://play.google.com/apps/testing/com.candlelight) it is currently released as a beta app.
+
 ## Screenshots of the initial prototype
 <img src="https://github.com/Lily418/candle-light/blob/master/screenshots/HomeScreenshot.png?raw=true" alt="Screenshot of home page including two main buttons 'Positive' and 'Negative' underneath is buttons with different feelings for example 'Uplifted' and 'Cared For'" width="270"/>
 
