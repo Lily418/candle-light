@@ -14,11 +14,19 @@ import {
   ListView
 } from "react-native"
 
-import Button from 'react-native-button';
-import Navigation from './Navigation'
+import Button from 'react-native-button'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 export default class Diary extends React.Component {
+
+  static navigationOptions = {
+    tabBarLabel: 'Diary',
+    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
+    tabBarIcon: ({ tintColor }) => {
+      return <Icon name="book" size={25} color={tintColor} />
+    }
+  };
   
   constructor(props) {
     super(props);
@@ -98,9 +106,6 @@ export default class Diary extends React.Component {
         renderRow={this.renderRow.bind(this)}
         style={styles.listViewStyle}
         /> : <View style={{flex : 1}} />}
-        <View style={styles.navContainer}>
-        <Navigation currentRoute={this.props.route}  navigator={this.props.navigator} />
-        </View>
       </View>
     )
   }

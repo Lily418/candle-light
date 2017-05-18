@@ -14,11 +14,16 @@ import {
 } from "react-native"
 
 import Button from 'react-native-button';
-
-import Navigation from './Navigation'
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class AddFeeling extends React.Component {
+
+  static navigationOptions = {
+    tabBarLabel: 'Add',
+    tabBarIcon: ({ tintColor }) => {
+      return <Icon name="plus" size={25} color={tintColor} />
+    }
+  };
   
   sentimentButtonPressed(newSection) {
     this.props.changeFeelingSection(newSection)
@@ -26,7 +31,7 @@ export default class AddFeeling extends React.Component {
 
   feelingButtonPressed(feelingName, sentiment) {
     this.props.wordSelected(feelingName, sentiment)
-    this.props.navigator.push({ key: 'DescribeFeeling' })
+    this.props.navigation.navigate('DescribeFeeling')
   }
 
   maxWidthOfButton() {
@@ -87,10 +92,6 @@ export default class AddFeeling extends React.Component {
         }
       </View>
       </ScrollView>
-      
-      <View style={styles.navContainer}>
-        <Navigation currentRoute={this.props.route} navigator={this.props.navigator} />
-      </View>
       </View>
     )
   }

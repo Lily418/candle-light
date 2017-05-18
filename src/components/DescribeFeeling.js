@@ -23,7 +23,7 @@ export default class DescribeFeeling extends React.Component {
     const feelingWord = this.props.selectedWord
     this.props.saveFeeling(description, sentiment, feelingWord, () => {
       this.props.questionAnswerUpdated("")
-      this.props.navigator.pop()
+      this.props.navigation.goBack()
     })
   }
 
