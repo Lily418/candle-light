@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   headerStyle: {
-    flexDirection: "row",
-    height: 40
+    flexDirection: "row"
   },
   saveButton: {
     flex: 0.2,
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
   },
   questionText: {
     flex: 0.8,
-    fontSize: 18
+    fontSize: 24
   },
   questionAnswerInput: {
     fontSize: 18,
