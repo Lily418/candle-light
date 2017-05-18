@@ -76,3 +76,6 @@ DerivedData
 
 ### Android ###
 android/.gradle/2.14.1/taskArtifacts/*
+
+android/app/my-release-key.keystore
+android/.gradle/2.14.1/
