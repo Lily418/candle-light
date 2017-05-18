@@ -75,13 +75,22 @@ const addIsNewDate = (feelingRecords) => {
   return feelingRecordsWithIsNewDate
 }
 
+const dispatchFeelings = (realm, dispatch) => {
+  dispatch({
+    type: LOADED_FEELINGS,
+    feelings : addIsNewDate(realm.objects("FeelingRecord").sorted('created', true))
+  })
+}
+
 export const loadFeelings = () => {
   return (dispatch, getState) => {
     const state = getState()
     const realm = state.realm.realm
-    return dispatch({
-      type: LOADED_FEELINGS,
-      feelings : addIsNewDate(realm.objects("FeelingRecord").sorted('created', true).snapshot())
+
+    dispatchFeelings(realm, dispatch)
+
+    realm.addListener("change", () => {
+      dispatchFeelings(realm, dispatch)
     })
   }
 }
