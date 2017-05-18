@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
+    backgroundColor: 'white'
     flexDirection: 'row',
     flex: 1
   },
