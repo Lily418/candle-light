@@ -81,7 +81,7 @@ export const loadFeelings = () => {
     const realm = state.realm.realm
     return dispatch({
       type: LOADED_FEELINGS,
-      feelings : addIsNewDate(realm.objects("FeelingRecord").snapshot())
+      feelings : addIsNewDate(realm.objects("FeelingRecord").sorted('created', true).snapshot())
     })
   }
 }
