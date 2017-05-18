@@ -30,7 +30,9 @@ export default class Navigation extends React.Component {
   }
 
   navigateTo(routeKey) {
-    this.props.navigator.push({key: routeKey})
+    if(routeKey != this.props.currentRoute.key) {
+      this.props.navigator.push({key: routeKey})
+    }
   }
 
   render() {
