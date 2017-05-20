@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     flex: 1,
-    margin: 10,
+    padding: 10,
     backgroundColor: "white"
   },
   headerStyle: {
