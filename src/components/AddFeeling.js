@@ -34,12 +34,21 @@ export default class AddFeeling extends React.Component {
     this.props.navigation.navigate('DescribeFeeling')
   }
 
-  maxWidthOfButton() {
+  maxWidthOfButton(minWidth) {
     const { width } = Dimensions.get('window')    
-    return (width / 3) - 20
+    const threeColumnWidth = (width / 3) - 20
+
+    if(threeColumnWidth < minWidth) {
+      return (width / 2) - 20
+    } else {
+      return threeColumnWidth
+    }
   }
 
   getButtonStyle() {
+
+    const minWidth = 110
+
     const baseStyle = { 
         padding: 10,
         height: 45, 
@@ -47,12 +56,12 @@ export default class AddFeeling extends React.Component {
         backgroundColor: 'white',
         margin: 4,
         elevation: 2,
-        minWidth: 120
+        minWidth: minWidth
       }
 
     console.log(this.maxWidthOfButton())
 
-    return { ...baseStyle, width: this.maxWidthOfButton() }
+    return { ...baseStyle, width: this.maxWidthOfButton(minWidth) }
   }
   
   render() {
