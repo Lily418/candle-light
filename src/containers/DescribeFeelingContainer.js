@@ -1,6 +1,6 @@
 import DescribeFeeling from '../components/DescribeFeeling'
 import { connect } from 'react-redux'
-import { questionAnswerUpdated, saveFeeling  } from '../modules/feelings'
+import { questionAnswerUpdated, saveFeeling, changeFeelingSection  } from '../modules/feelings'
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     questionAnswerUpdated: (questionAnswer) => {
       dispatch(questionAnswerUpdated(questionAnswer))
+    },
+    changeFeelingSection: (newSection) => {
+      dispatch(changeFeelingSection(newSection))
     },
     saveFeeling: (description, sentiment, feelingWord, onComplete) => {
       dispatch(saveFeeling(description, sentiment, feelingWord, onComplete))
