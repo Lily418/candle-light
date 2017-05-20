@@ -1,4 +1,5 @@
 import moment from 'moment'
+import uuid from 'uuid/v4'
 
 const CHANGE_FEELING_SECTION = "CHANGE_FEELING_SECTION"
 const SELECT_WORD = "SELECT_WORD"
@@ -42,11 +43,9 @@ export const saveFeeling = (description, sentiment, feelingWord, onComplete) => 
   return (dispatch, getState) => {
     const state = getState()
     const realm = state.realm.realm
-
-    console.log(realm.path)
-
     realm.write(() => {
       realm.create("FeelingRecord", {
+        id: uuid(),
         description, sentiment, feelingWord,
         created: moment().toDate(),
       })
