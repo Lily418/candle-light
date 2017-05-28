@@ -35,28 +35,22 @@ export default class AddFeeling extends React.Component {
   }
 
   maxWidthOfButton(minWidth) {
-    const { width } = Dimensions.get('window')    
-    const threeColumnWidth = (width / 3) - 20
-
-    if(threeColumnWidth < minWidth) {
-      return (width / 2) - 20
-    } else {
-      return threeColumnWidth
-    }
+    const { width } = Dimensions.get('window')
+    return (width / 2) - 20
   }
 
   getButtonStyle() {
 
-    const minWidth = 110
+    const minWidth = 150
 
     const baseStyle = { 
         padding: 10,
-        height: 45, 
+        height: 60, 
         overflow: 'hidden', 
         backgroundColor: 'white',
         margin: 4,
         elevation: 2,
-        minWidth: minWidth
+        justifyContent: 'center',
       }
 
     console.log(this.maxWidthOfButton())
@@ -145,7 +139,6 @@ const styles = StyleSheet.create({
   },
   sentimentButtonContainer: {
     flexDirection: 'row',
-    flex: 0.2
   },
   feelingButtonsContainer: {
     flexDirection: 'row',
@@ -158,8 +151,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: "center",
-    margin: 10,
-    flex: 0.1
+    margin: 10
   },
   feelingButtonsScrollView: {
     flex: 0.7
