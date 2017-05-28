@@ -46,12 +46,12 @@ export default class Diary extends React.Component {
     if(feelingRecord.sentiment === "Positive") {
       return {
         ...baseFeelingRecordStyle,
-        "backgroundColor" : "#8dc73f"
+        "backgroundColor" : "#307e48"
       }
     } else {
       return {
         ...baseFeelingRecordStyle,
-        "backgroundColor" : "#c74c3f"
+        "backgroundColor" : "#c33737"
       }
     }
   }
@@ -77,6 +77,36 @@ export default class Diary extends React.Component {
 
   }
 
+  getDayOfWeekStyle(created) {
+    const baseStyle = {
+      fontSize: 18
+    }
+
+    if(created.isSame(moment(), "day")) {
+      return {
+        ...baseStyle,
+        color: '#1c6bd9'
+      }
+    } else {
+        return baseStyle
+    }
+  }
+
+  getDayOfMonthStyle(created) {
+    const baseStyle = {
+      fontSize: 16
+    }
+
+    if(created.isSame(moment(), "day")) {
+      return {
+        ...baseStyle,
+        color: '#1c6bd9'
+      }
+    } else {
+        return baseStyle
+    }
+  }
+
   openFeelingDetail(feelingRecord) {
     this.props.changeShowingFeeling(feelingRecord)
     this.props.navigation.navigate('DetailFeeling')
@@ -90,8 +120,8 @@ export default class Diary extends React.Component {
       <TouchableOpacity onPress={this.openFeelingDetail.bind(this, feelingRecord)}>
         <View style={this.getFeelingContainerStyle(feelingRecord)}>
         <View style={styles.feelingDate}>
-          {feelingRecord.isNewDate ? <Text>{created.format("DD")}</Text> : null}
-          {feelingRecord.isNewDate ? <Text>{created.format("ddd")}</Text> : null}
+          {feelingRecord.isNewDate ? <Text style={this.getDayOfWeekStyle(created)}>{created.format("DD")}</Text> : null}
+          {feelingRecord.isNewDate ? <Text style={this.getDayOfMonthStyle(created)}>{created.format("ddd")}</Text> : null}
         </View>
         <View style={this.getFeelingRecordStyle(feelingRecord)}>
           <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
