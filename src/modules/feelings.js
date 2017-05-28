@@ -7,6 +7,7 @@ const QUESTION_ANSWER_UPDATED = "QUESTION_ANSWER_UPDATED"
 const START_FEELING_SAVE = "START_QUESTION_SAVE"
 const FEELING_SAVED = "QUESTION_SAVED"
 const LOADED_FEELINGS = "LOADED_FEELINGS"
+const CHANGE_SHOWING_FEELING = "CHANGE_SHOWING_FEELING"
 
 const initialState = {
   showingSection: null,
@@ -15,13 +16,21 @@ const initialState = {
   selectedWord: null,
   selectedSentiment: null,
   questionAnswer: "",
-  feelings: []
+  feelings: [],
+  showingFeeling: null
 }
 
 export const changeFeelingSection = (showingSection) => {
   return {
     "type": CHANGE_FEELING_SECTION,
     showingSection
+  }
+}
+
+export const changeShowingFeeling = (feelingRecord) => {
+  return {
+    "type": CHANGE_SHOWING_FEELING,
+    feelingRecord
   }
 }
 
@@ -117,6 +126,11 @@ export default function feelings(state = initialState, action = {}) {
       return {
         ...state,
         feelings: action.feelings
+      }
+    case CHANGE_SHOWING_FEELING:
+      return {
+        ...state,
+        showingFeeling: action.feelingRecord
       }
     default:
       return state
