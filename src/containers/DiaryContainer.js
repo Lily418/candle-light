@@ -1,6 +1,6 @@
 import Diary from '../components/Diary'
 import { connect } from 'react-redux'
-import { loadFeelings  } from '../modules/feelings'
+import { loadFeelings, changeShowingFeeling  } from '../modules/feelings'
 
 
 const mapStateToProps = (state) => {
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadFeelings: () => {
       dispatch(loadFeelings())
+    },
+    changeShowingFeeling: (feelingId) => {
+      dispatch(changeShowingFeeling(feelingId))
     }
   }
 }

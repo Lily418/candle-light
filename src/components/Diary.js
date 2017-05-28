@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  TouchableOpacity
 } from "react-native"
 
 import Button from 'react-native-button'
@@ -76,22 +77,29 @@ export default class Diary extends React.Component {
 
   }
 
+  openFeelingDetail(feelingRecord) {
+    this.props.changeShowingFeeling(feelingRecord)
+    this.props.navigation.navigate('DetailFeeling')
+  }
+
   renderRow(feelingRecord) {
   
     const created = moment(feelingRecord.created)
     
     return (
-      <View style={this.getFeelingContainerStyle(feelingRecord)}>
-      <View style={styles.feelingDate}>
-        {feelingRecord.isNewDate ? <Text>{created.format("DD")}</Text> : null}
-        {feelingRecord.isNewDate ? <Text>{created.format("ddd")}</Text> : null}
-      </View>
-      <View style={this.getFeelingRecordStyle(feelingRecord)}>
-        <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
-        <Text style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
-        <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
-      </View>
-      </View>
+      <TouchableOpacity onPress={this.openFeelingDetail.bind(this, feelingRecord)}>
+        <View style={this.getFeelingContainerStyle(feelingRecord)}>
+        <View style={styles.feelingDate}>
+          {feelingRecord.isNewDate ? <Text>{created.format("DD")}</Text> : null}
+          {feelingRecord.isNewDate ? <Text>{created.format("ddd")}</Text> : null}
+        </View>
+        <View style={this.getFeelingRecordStyle(feelingRecord)}>
+          <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
+          <Text style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
+          <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
+        </View>
+        </View>
+      </TouchableOpacity>
     )
   }
   

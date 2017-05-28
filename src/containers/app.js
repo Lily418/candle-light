@@ -10,6 +10,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 import AddFeeling from './AddFeelingContainer'
 import DescribeFeeling from './DescribeFeelingContainer'
 import Diary from './DiaryContainer'
+import DetailFeeling from './DetailFeelingContainer'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const reducer = combineReducers(reducers)
@@ -39,7 +40,9 @@ const MainTabs = TabNavigator({
 
 const MainStack = StackNavigator({
   Home: { screen: MainTabs },
-  DescribeFeeling: { screen : DescribeFeeling }
+  DescribeFeeling: { screen : DescribeFeeling },
+  DetailFeeling: { screen: DetailFeeling }
+  
 }, {
   headerMode: "none"
 });
