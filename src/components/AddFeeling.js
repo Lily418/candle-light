@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     height:45, 
     overflow:'hidden', 
     borderRadius:30, 
-    backgroundColor: '#8dc73f',
+    backgroundColor: '#307e48',
     flex: 0.5,
     margin: 10
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     height:45, 
     overflow:'hidden', 
     borderRadius:30, 
-    backgroundColor: '#c74c3f',
+    backgroundColor: '#c33737',
     flex: 0.5,
     margin: 10
   },

@@ -26,12 +26,12 @@ export default class AddFeeling extends React.Component {
     if(feelingRecord.sentiment === "Positive") {
       return {
         ...baseHeaderViewStyle,
-        "backgroundColor" : "#8dc73f"
+        "backgroundColor" : "#307e48"
       }
     } else {
       return {
         ...baseHeaderViewStyle,
-        "backgroundColor" : "#c74c3f"
+        "backgroundColor" : "#c33737"
       }
     }
   }
