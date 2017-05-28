@@ -119,13 +119,13 @@ export default class Diary extends React.Component {
     return (
       <TouchableOpacity onPress={this.openFeelingDetail.bind(this, feelingRecord)}>
         <View style={this.getFeelingContainerStyle(feelingRecord)}>
-        <View style={styles.feelingDate}>
+        <View accessibilityLabel={created.format("Do") + " " + created.format("dddd") + " " + created.format("hh:mma")}  style={styles.feelingDate}>
           {feelingRecord.isNewDate ? <Text style={this.getDayOfWeekStyle(created)}>{created.format("DD")}</Text> : null}
           {feelingRecord.isNewDate ? <Text style={this.getDayOfMonthStyle(created)}>{created.format("ddd")}</Text> : null}
         </View>
         <View style={this.getFeelingRecordStyle(feelingRecord)}>
           <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
-          <Text style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
+          <Text importantForAccessibility='no' style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
           <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
         </View>
         </View>

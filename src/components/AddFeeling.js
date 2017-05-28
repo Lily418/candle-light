@@ -64,9 +64,11 @@ export default class AddFeeling extends React.Component {
 
     return (
       <View style={styles.container}>
-      <Text style={styles.title}>
-      How Do You Feel?
-      </Text>
+      <View accessible={true}>
+        <Text style={styles.title}>
+          How Do You Feel?
+        </Text>
+      </View>
       <View style={styles.sentimentButtonContainer}>
       
       <Button
@@ -82,19 +84,21 @@ export default class AddFeeling extends React.Component {
         Negative
       </Button>
       </View>
-
-      <ScrollView style={styles.feelingButtonsScrollView}>
-        <View style={styles.feelingButtonsContainer}>
-        { wordsToDisplay ? 
-          wordsToDisplay.map((word, index) => 
-            <Button key={`feeling-button-${index}`} containerStyle={this.getButtonStyle.bind(this)()}
-                    style={styles.feelingButtonTextStyle}
-                    onPress={this.feelingButtonPressed.bind(this, word, this.props.showingSection)}>{word}</Button>
-          )
-          : null
+      
+      { wordsToDisplay && wordsToDisplay.length > 0 ? 
+            <ScrollView style={styles.feelingButtonsScrollView}>
+              <View style={styles.feelingButtonsContainer}>
+              {
+                wordsToDisplay.map((word, index) => 
+                  <Button key={`feeling-button-${index}`} containerStyle={this.getButtonStyle.bind(this)()}
+                          style={styles.feelingButtonTextStyle}
+                          onPress={this.feelingButtonPressed.bind(this, word, this.props.showingSection)}>{word}</Button>
+                )
+              }
+            </View>
+            </ScrollView> : null
         }
-      </View>
-      </ScrollView>
+
       </View>
     )
   }
