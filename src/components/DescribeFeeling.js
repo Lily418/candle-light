@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   saveButton: {
     flex: 0.2,
     color: "#1a8299",
-    fontSize: 18
+    fontSize: 24
   },
   saveButtonContainer: {
     flex: 0.2
