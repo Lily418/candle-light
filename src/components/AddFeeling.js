@@ -105,30 +105,32 @@ const styles = StyleSheet.create({
     flex: 0.2
   },
   positiveButtonContainerStyle: {
-    padding:10,
-    height:45, 
+    paddingTop: 10,
+    paddingBottom: 10,
     overflow:'hidden', 
-    borderRadius:30, 
+    borderRadius:60, 
     backgroundColor: '#307e48',
     flex: 0.5,
-    margin: 10
+    margin: 10,
+    justifyContent: 'center'
   },
   negativeButtonContainerStyle: {
-    padding:10,
-    height:45, 
+    paddingTop: 10,
+    paddingBottom: 10,
     overflow:'hidden', 
-    borderRadius:30, 
+    borderRadius:60, 
     backgroundColor: '#c33737',
     flex: 0.5,
-    margin: 10
+    margin: 10,
+    justifyContent: 'center'
   },
   feelingButtonTextStyle: {
-    fontSize: 16 , 
+    fontSize: 24 , 
     fontWeight: 'normal',
     color: '#5f5963'
   },
   sentimentButtonTextStyle: {
-    fontSize: 20, 
+    fontSize: 28, 
     fontWeight: 'normal',
     color: 'white'
   },
