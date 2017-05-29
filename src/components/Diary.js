@@ -124,9 +124,13 @@ export default class Diary extends React.Component {
           {feelingRecord.isNewDate ? <Text style={this.getDayOfMonthStyle(created)}>{created.format("ddd")}</Text> : null}
         </View>
         <View style={this.getFeelingRecordStyle(feelingRecord)}>
-          <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
+          <Text accessibilityLabel={(feelingRecord.sentiment === "Positive" ? "Positive Feeling " : "Negative Feeling ") + feelingRecord.feelingWord} style={styles.feelingWordStyle}>
+            {feelingRecord.feelingWord}
+          </Text>
           <Text importantForAccessibility='no' style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
-          <Text accessibilityLabel={feelingRecord.description + ". item " + (parseInt(rowID) + 1) + " in list " + this.props.feelings.length + " items."} style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
+          <Text accessibilityLabel={feelingRecord.description + ". item " + (parseInt(rowID) + 1) + " in list " + this.props.feelings.length + (this.props.feelings.length == 1 ? " item." : " items.")} style={styles.feelingDescriptionStyle}>
+            {feelingRecord.description}
+          </Text>
         </View>
         </View>
       </TouchableOpacity>
@@ -143,7 +147,10 @@ export default class Diary extends React.Component {
         dataSource={feelingsDataSource}
         renderRow={this.renderRow.bind(this, this.props.feelings.length)}
         style={styles.listViewStyle}
-        /> : <View style={{flex : 1}} />}
+        /> : 
+        <View style={{flex : 1}}> 
+          <Text style={styles.emptyDiary}>Your diary is currently empty, after you record feelings using 'Add Feeling' you will find them here.</Text>
+        </View>}
       </View>
     )
   }
@@ -172,5 +179,10 @@ const styles = StyleSheet.create({
   feelingDate: {
     flex: 0.15,
     padding: 5
+  },
+  emptyDiary: {
+    padding: 20,
+    textAlign: 'center',
+    fontSize: 24
   }
 })
