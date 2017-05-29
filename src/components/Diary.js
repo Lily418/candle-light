@@ -112,7 +112,7 @@ export default class Diary extends React.Component {
     this.props.navigation.navigate('DetailFeeling')
   }
 
-  renderRow(feelingRecord) {
+  renderRow(itemCount, feelingRecord) {
   
     const created = moment(feelingRecord.created)
     
@@ -138,11 +138,12 @@ export default class Diary extends React.Component {
     const feelingsDataSource = ds.cloneWithRows(this.props.feelings)
     
     return (
-      <View style={styles.container}>
+      <View accessibilityLabel={"Diary"}  style={styles.container}>
         {this.props.feelings.length > 0 ? <ListView
         dataSource={feelingsDataSource}
-        renderRow={this.renderRow.bind(this)}
+        renderRow={this.renderRow.bind(this, this.props.feelings.length)}
         style={styles.listViewStyle}
+        accessibilityLabel={"List of feelings recorded, contains " + this.props.feelings.length + " items. Swipe vertically with two fingers to scroll"}
         /> : <View style={{flex : 1}} />}
       </View>
     )
