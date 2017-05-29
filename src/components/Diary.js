@@ -112,7 +112,7 @@ export default class Diary extends React.Component {
     this.props.navigation.navigate('DetailFeeling')
   }
 
-  renderRow(itemCount, feelingRecord) {
+  renderRow(itemCount, feelingRecord, sectionID, rowID) {
   
     const created = moment(feelingRecord.created)
     
@@ -126,7 +126,7 @@ export default class Diary extends React.Component {
         <View style={this.getFeelingRecordStyle(feelingRecord)}>
           <Text style={styles.feelingWordStyle}>{feelingRecord.feelingWord}</Text>
           <Text importantForAccessibility='no' style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
-          <Text style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
+          <Text accessibilityLabel={feelingRecord.description + ". item " + (parseInt(rowID) + 1) + " in list " + this.props.feelings.length + " items."} style={styles.feelingDescriptionStyle}>{feelingRecord.description}</Text>
         </View>
         </View>
       </TouchableOpacity>
@@ -143,7 +143,6 @@ export default class Diary extends React.Component {
         dataSource={feelingsDataSource}
         renderRow={this.renderRow.bind(this, this.props.feelings.length)}
         style={styles.listViewStyle}
-        accessibilityLabel={"List of feelings recorded, contains " + this.props.feelings.length + " items. Swipe vertically with two fingers to scroll"}
         /> : <View style={{flex : 1}} />}
       </View>
     )
