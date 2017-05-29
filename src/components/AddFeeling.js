@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class AddFeeling extends React.Component {
 
   static navigationOptions = {
-    tabBarLabel: 'Add',
+    tabBarLabel: 'Add Feeling',
     tabBarIcon: ({ tintColor }) => {
       return <Icon name="plus" size={25} color={tintColor} />
     }
@@ -63,12 +63,10 @@ export default class AddFeeling extends React.Component {
     const wordsToDisplay = this.props["feelingWords" + this.props.showingSection]
 
     return (
-      <View style={styles.container}>
-      <View accessible={true}>
-        <Text style={styles.title}>
-          How Do You Feel?
-        </Text>
-      </View>
+      <View accessibilityLabel={"Add Feeling"} style={styles.container}>
+      <Text style={styles.title}>
+        How Do You Feel?
+      </Text>
       <View style={styles.sentimentButtonContainer}>
       
       <Button
