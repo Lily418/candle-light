@@ -32,15 +32,15 @@ export default class DescribeFeeling extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.headerStyle}>
-          <Text style={styles.questionText}>What has made you feel {this.props.selectedWord.toLowerCase()}?</Text>
+          <Text style={styles.questionText} importantForAccessibility={"no"}>What has made you feel {this.props.selectedWord.toLowerCase()}?</Text>
           <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton} onPress={this.savePressed.bind(this)}>SAVE</Button> 
         </View>
       <TextInput
+        accessibilityLabel={"What has made you feel" + this.props.selectedWord.toLowerCase() + "?"}
         style={styles.questionAnswerInput}
         onChangeText={this.props.questionAnswerUpdated}
         underlineColorAndroid='transparent'
         multiline={true}
-        placeholder={"Your text here"}
         value={this.props.questionAnswer}
         autoFocus={true}
       />
