@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   saveButton: {
-    flex: 0.2,
     color: "#1a8299",
     fontSize: 24
   },
