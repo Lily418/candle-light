@@ -10,13 +10,27 @@ import {
   Text,
   View,
   TextInput,
-  Platform
+  Platform,
+  Button as VanillaButton
 } from "react-native"
 
 import Button from 'react-native-button';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 export default class DescribeFeeling extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerRight:  (<VanillaButton title="Save" onPress={ params.savePressed ? params.savePressed : () => null } />),
+      headerTitle: "Describe Feeling"
+    }
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ savePressed: this.savePressed.bind(this) })
+  }
 
   savePressed() {
     const description = this.props.questionAnswer
@@ -34,7 +48,11 @@ export default class DescribeFeeling extends React.Component {
       <View style={styles.container}>
         <View style={styles.headerStyle}>
           <Text style={styles.questionText} importantForAccessibility={"no"}>What has made you feel {this.props.selectedWord.toLowerCase()}?</Text>
-          <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton} onPress={this.savePressed.bind(this)}>SAVE</Button> 
+          {
+            Platform.OS === "android" ? 
+              <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton} onPress={this.savePressed.bind(this)}>SAVE</Button> 
+              : null
+          }
         </View>
       <TextInput
         accessibilityLabel={"What has made you feel" + this.props.selectedWord.toLowerCase() + "?"}
@@ -55,9 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     padding: 10,
-    backgroundColor: "white",
-    padding: Platform.OS === 'ios' ? 20 : 10,
-    paddingTop:  Platform.OS === 'ios' ? 25 : 10
+    backgroundColor: "white"
   },
   headerStyle: {
     flexDirection: "row"

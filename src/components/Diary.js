@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class Diary extends React.Component {
 
   static navigationOptions = {
+    headerTitle: "Diary",
     tabBarLabel: 'Diary',
     // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: ({ tintColor }) => {
@@ -109,7 +110,7 @@ export default class Diary extends React.Component {
 
   openFeelingDetail(feelingRecord) {
     this.props.changeShowingFeeling(feelingRecord)
-    this.props.navigation.navigate('DetailFeeling')
+    this.props.navigation.navigate('DetailFeeling', { feelingRecord: feelingRecord })
   }
 
   renderRow(itemCount, feelingRecord, sectionID, rowID) {

@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class AddFeeling extends React.Component {
 
   static navigationOptions = {
+    headerTitle: 'How Do You Feel?',
     tabBarLabel: 'Add Feeling',
     tabBarIcon: ({ tintColor }) => {
       return <Icon name="plus" size={25} color={tintColor} />
@@ -65,9 +66,13 @@ export default class AddFeeling extends React.Component {
 
     return (
       <View accessibilityLabel={"Add Feeling"} style={styles.container}>
-      <Text style={styles.title}>
-        How Do You Feel?
-      </Text>
+      { // On iOS this title is in the header
+        Platform.OS === "android" ? 
+        <Text style={styles.title}>
+          How Do You Feel?
+        </Text> : null
+      }
+
       <View style={styles.sentimentButtonContainer}>
       
       <Button
@@ -138,7 +143,6 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   container: {
-    paddingTop:  Platform.OS === 'ios' ? 20 : 0,
     flex: 1,
     backgroundColor: "white",
     alignItems: "stretch"
