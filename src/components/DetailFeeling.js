@@ -11,12 +11,27 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  Platform
 } from "react-native"
 
 import Button from 'react-native-button';
 
 export default class AddFeeling extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerTitle:  params.feelingRecord.feelingWord,
+      headerTintColor: "#FFF",
+      headerTitleStyle: {
+        color: "#FFF"
+      },
+      headerStyle: {
+        backgroundColor: params.feelingRecord.sentiment === "Positive" ?  "#307e48" : "#c33737"
+      }
+    }
+  }
 
   getHeaderViewStyle(feelingRecord) {
     const baseHeaderViewStyle = {
@@ -26,12 +41,12 @@ export default class AddFeeling extends React.Component {
     if(feelingRecord.sentiment === "Positive") {
       return {
         ...baseHeaderViewStyle,
-        "backgroundColor" : "#307e48"
+        "backgroundColor" :  Platform.OS === "android" ? "#307e48" : "#FFF"
       }
     } else {
       return {
         ...baseHeaderViewStyle,
-        "backgroundColor" : "#c33737"
+        "backgroundColor" : Platform.OS === "android" ? "#c33737" : "#FFF"
       }
     }
   }
@@ -43,7 +58,9 @@ export default class AddFeeling extends React.Component {
     return (
       <View style={styles.container}>
         <View style={this.getHeaderViewStyle(feelingRecord)}>
-          <Text style={styles.feelingWord}>{feelingRecord.feelingWord}</Text>
+          {
+            Platform.OS === "android" ? <Text style={styles.feelingWord}>{feelingRecord.feelingWord}</Text> : null
+          }
           <Text style={styles.created}>{created.format("dddd, M MMMM YYYY")}</Text>
         </View>
         <ScrollView>
@@ -70,7 +87,7 @@ const styles = StyleSheet.create({
   },
   created: {
     fontSize: 16,
-    color: 'white'
+    color: Platform.OS === "android" ? 'white' : 'black'
   },
   description: {
     padding: 20,

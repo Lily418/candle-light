@@ -1,6 +1,8 @@
 import React from 'react'
+import { Platform } from "react-native"
+
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import thunk from 'redux-thunk'
 import * as reducers from '../modules'
 
@@ -43,9 +45,20 @@ const MainStack = StackNavigator({
   DetailFeeling: { screen: DetailFeeling }
   
 }, {
-  headerMode: "none"
+  headerMode: Platform.OS === 'ios' ? "float" : "none",
+  navigationOptions: {
+    headerBackTitle: "Back",
+    headerStyle: {
+      backgroundColor: "#FFF"
+    }
+  }
 });
 
+const MainStackContainer = connect((state) => { return {
+  'showingFeeling' : state.feelings.showingFeeling
+}}, (dispatch) => {
+
+})(MainStack)
 
 export default class App extends React.Component {
   render() {
