@@ -10,7 +10,8 @@ import {
   Text,
   View,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Platform
 } from "react-native"
 
 import Button from 'react-native-button';
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   container: {
+    paddingTop:  Platform.OS === 'ios' ? 20 : 0,
     flex: 1,
     backgroundColor: "white",
     alignItems: "stretch"

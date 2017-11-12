@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  Platform
 } from "react-native"
 
 import Button from 'react-native-button';
@@ -54,7 +55,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     padding: 10,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    padding: Platform.OS === 'ios' ? 20 : 10,
+    paddingTop:  Platform.OS === 'ios' ? 25 : 10
   },
   headerStyle: {
     flexDirection: "row"
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   saveButtonContainer: {
-    flex: 0.2
+    flex: 0.3
   },
   questionText: {
     flex: 0.8,
