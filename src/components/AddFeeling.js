@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   feelingButtonTextStyle: {
-    fontSize: 24 , 
+    fontSize: 22 , 
     fontWeight: 'normal',
     color: '#5f5963'
   },
