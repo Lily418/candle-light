@@ -2,7 +2,7 @@ import moment from 'moment'
 import uuid from 'uuid/v4'
 
 const CHANGE_FEELING_SECTION = "CHANGE_FEELING_SECTION"
-const SELECT_WORD = "SELECT_WORD"
+const SELECT_PERSON = "SELECT_PERSON"
 const QUESTION_ANSWER_UPDATED = "QUESTION_ANSWER_UPDATED"
 const START_FEELING_SAVE = "START_QUESTION_SAVE"
 const FEELING_SAVED = "QUESTION_SAVED"
@@ -34,10 +34,10 @@ export const changeShowingFeeling = (feelingRecord) => {
   }
 }
 
-export const wordSelected = (selectedWord, selectedSentiment) => {
+export const personSelected = (selectedPersonId) => {
   return {
-    type: SELECT_WORD,
-    selectedWord, selectedSentiment
+    type: SELECT_PERSON,
+    selectedPersonId
   }
 }
 
@@ -111,11 +111,10 @@ export default function feelings(state = initialState, action = {}) {
         ...state,
         "showingSection": action.showingSection
       }
-    case SELECT_WORD:
+    case SELECT_PERSON:
       return {
         ...state,
-        "selectedWord": action.selectedWord,
-        "selectedSentiment": action.selectedSentiment
+        "selectedPersonId": action.selectedPersonId
       }
     case QUESTION_ANSWER_UPDATED:
       return {

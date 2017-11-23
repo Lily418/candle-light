@@ -6,17 +6,20 @@
 
 import React from "react"
 import {
+  ScrollView,
   StyleSheet,
   Text,
   View,
   TextInput,
   Platform,
-  Button as VanillaButton
+  Button as VanillaButton,
+  KeyboardAvoidingView,
+  Dimensions
 } from "react-native"
 
-import Button from 'react-native-button';
-import Icon from 'react-native-vector-icons/FontAwesome'
-
+import Button from "react-native-button";
+import Icon from "react-native-vector-icons/FontAwesome"
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 
 export default class DescribeFeeling extends React.Component {
 
@@ -44,54 +47,85 @@ export default class DescribeFeeling extends React.Component {
   }
 
   render() {
+    const {height, width} = Dimensions.get('window');
     return (
-      <View style={styles.container}>
-        <View style={styles.headerStyle}>
-          <Text style={styles.questionText} importantForAccessibility={"no"}>What has made you feel {this.props.selectedWord.toLowerCase()}?</Text>
-          {
-            Platform.OS === "android" ? 
-              <Button containerStyle={styles.saveButtonContainer} style={styles.saveButton} onPress={this.savePressed.bind(this)}>SAVE</Button> 
-              : null
-          }
-        </View>
-      <TextInput
-        accessibilityLabel={"What has made you feel" + this.props.selectedWord.toLowerCase() + "?"}
-        style={styles.questionAnswerInput}
-        onChangeText={this.props.questionAnswerUpdated}
-        underlineColorAndroid='transparent'
-        multiline={true}
-        value={this.props.questionAnswer}
-        autoFocus={true}
-      />
+      <ScrollView > 
+        <View style={{
+          backgroundColor: "white",
+          padding: 10,
+          height: height - 30
+        }}>
+          <Text style={styles.questionText} importantForAccessibility={"no"}>
+            Who is this feeling about?
+          </Text>
+          <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={undefined} value={undefined} underlineColorAndroid="#1a8299"/>
+          <Text style={styles.questionText}>
+            How do you feel?
+          </Text>
+          <RadioForm radio_props={[
+              {
+                label: "Positive",
+                value: 0
+              }, {
+                label: "Negative",
+                value: 1
+              }
+            ]} formHorizontal={true} buttonColor={"#6D6D6D"} selectedButtonColor={"#1a8299"} labelColor={"black"} animation={false} initial={0} labelStyle={{
+              height: 22,
+              fontSize: 18,
+              color: "black"
+            }} style={{
+              justifyContent: "space-between",
+              paddingTop: 20,
+              paddingBottom: 20,
+              paddingRight: 40
+            }} onPress={(value) => {
+              this.setState({value: value})
+            }}/>
+          <Text style={styles.questionText} importantForAccessibility={"no"}>
+            What Word Describes This Feeling?
+          </Text>
+          <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={undefined} value={undefined} underlineColorAndroid="#1a8299"/>
+          <Text style={styles.questionText} importantForAccessibility={"no"}>
+            What has Liam done which made you feel encouraged?
+          </Text>
+          <TextInput accessibilityLabel={"What has Liam done which made you feel encouraged?"} style={styles.questionAnswerMultilineInput} onChangeText={undefined} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
+          <Button style={styles.saveButton}>
+            Save
+          </Button>
       </View>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    flex: 1,
-    padding: 10,
-    backgroundColor: "white"
+  innerContainer: {
+    padding: 10
   },
   headerStyle: {
     flexDirection: "row"
   },
   saveButton: {
-    color: "#1a8299",
-    fontSize: 24
-  },
-  saveButtonContainer: {
-    flex: 0.3
+    backgroundColor: "#1a8299",
+    color: "white",
+    fontSize: 24,
+    padding: 20,
+    margin: 20
   },
   questionText: {
-    flex: 0.8,
-    fontSize: 24
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 2
   },
   questionAnswerInput: {
-    fontSize: 18,
-    flex: 0.9,
+    fontSize: 18
+  },
+  questionAnswerMultilineInput: {
+    paddingTop: 10,
+    borderWidth: 1,
+    borderColor: "black",
     textAlignVertical: 'top'
   }
 })
