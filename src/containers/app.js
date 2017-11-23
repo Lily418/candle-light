@@ -8,7 +8,7 @@ import * as reducers from '../modules'
 
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
-import AddFeeling from './AddFeelingContainer'
+import People from './PeopleContainer'
 import DescribeFeeling from './DescribeFeelingContainer'
 import Diary from './DiaryContainer'
 import DetailFeeling from './DetailFeelingContainer'
@@ -18,8 +18,8 @@ const reducer = combineReducers(reducers)
 const store = createStoreWithMiddleware(reducer)
 
 const MainTabs = TabNavigator({
-  Add: {
-    screen: AddFeeling,
+  People: {
+    screen: People,
   },
   Diary: {
     screen: Diary
