@@ -21,6 +21,7 @@ import Button from "react-native-button";
 import Icon from "react-native-vector-icons/FontAwesome"
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import Joi from "react-native-joi"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class DescribeFeeling extends React.Component {
 
@@ -167,11 +168,13 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
   render() {
     const {height, width} = Dimensions.get('window');
     return (
-      <ScrollView > 
+      <View style={{
+        backgroundColor: "white",
+      }}>
+      <ScrollView> 
         <View style={{
           backgroundColor: "white",
-          padding: 10,
-          height: height
+          padding: 10
         }}>
           { this.props.selectedPerson ? null : <View><Text style={styles.questionText} importantForAccessibility={"no"}>
                       Who is this feeling about?
@@ -211,12 +214,13 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, false)}
           </Text>
-          <TextInput accessibilityLabel={this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, true)} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
+          <TextInput lines={10} accessibilityLabel={this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, true)} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} value={this.props.questionAnswer}/>
           <Button style={styles.saveButton} onPress={this.savePressed.bind(this)}>
             Save
           </Button>
       </View>
       </ScrollView>
+      </View>
     )
   }
 }
