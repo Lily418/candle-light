@@ -49,18 +49,6 @@ export default class People extends React.Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const peopleDataSource = ds.cloneWithRows(this.props.people)
 
-    
-    /*      <View accessibilityLabel={"Diary"}  style={styles.container}>
-            {this.props.feelings.length > 0 ? <ListView
-            dataSource={feelingsDataSource}
-            renderRow={this.renderRow.bind(this, this.props.feelings.length)}
-            style={styles.listViewStyle}
-            /> : 
-            <View style={{flex : 1}}> 
-              <Text style={styles.emptyDiary}>Your diary is currently empty, after you record feelings using 'Add Feeling' you will find them here.</Text>
-            </View>}
-          </View>*/
-
     return (
       <View accessibilityLabel={"People"} style={styles.container}>
         <ListView
