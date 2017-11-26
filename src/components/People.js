@@ -11,6 +11,7 @@ import {
   View,
   ScrollView,
   Dimensions,
+  ListView,
   Platform
 } from "react-native"
 
@@ -38,14 +39,40 @@ export default class People extends React.Component {
     this.props.personSelected(person)
     this.props.navigation.navigate('DescribeFeeling')
   }
+
+  renderRow(person, sectionID, rowID) {
+    return (<PersonSummary key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />)
+  }
   
   render() {
+    
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const peopleDataSource = ds.cloneWithRows(this.props.people)
+
+    
+    /*      <View accessibilityLabel={"Diary"}  style={styles.container}>
+            {this.props.feelings.length > 0 ? <ListView
+            dataSource={feelingsDataSource}
+            renderRow={this.renderRow.bind(this, this.props.feelings.length)}
+            style={styles.listViewStyle}
+            /> : 
+            <View style={{flex : 1}}> 
+              <Text style={styles.emptyDiary}>Your diary is currently empty, after you record feelings using 'Add Feeling' you will find them here.</Text>
+            </View>}
+          </View>*/
+
     return (
       <View accessibilityLabel={"People"} style={styles.container}>
-        <Quote />
-
-        <PersonSummary person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/>
-        { this.props.people.map(person => <PersonSummary key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />) }
+        <ListView
+          enableEmptySections={true}
+          dataSource={peopleDataSource}
+          renderHeader={() => 
+            <View>
+              <Quote /> 
+              <PersonSummary person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/> 
+          </View>}
+          renderRow={this.renderRow.bind(this)}
+        />
       </View>
     )
   }
@@ -55,6 +82,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    padding: 10
+    padding: 10,
   }
 })
