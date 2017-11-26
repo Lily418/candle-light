@@ -9,9 +9,19 @@ const FeelingRecordSchema = {
     description: "string",
     created: "date",
     sentiment: "string",
-    feelingWord: "string"
+    feelingWord: "string",
   }
 };
+
+const PersonSchema = {
+  name: "Person",
+  primaryKey: 'id',
+  properties: {
+        id: "string",
+        name: "string",
+        feelings: "FeelingRecord[]"
+  }
+}
 
 const addIdMigration = (oldRealm, newRealm) => {
   let oldFeelingRecords = oldRealm.objects('FeelingRecord');
@@ -32,8 +42,8 @@ const addIdMigration = (oldRealm, newRealm) => {
 
 const initialState = {
   realm: new Realm({
-    schema: [FeelingRecordSchema],
-    schemaVersion: 2,
+    schema: [FeelingRecordSchema, PersonSchema],
+    schemaVersion: 4,
     migration: (oldRealm, newRealm) => {
       //Scheme version in original release was undefined so it would not be less than 2
       if(!(oldRealm.schemaVersion >= 2)) {

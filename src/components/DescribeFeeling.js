@@ -38,13 +38,69 @@ export default class DescribeFeeling extends React.Component {
   savePressed() {
     const description = this.props.questionAnswer
     const sentiment = this.props.selectedSentiment
-    const feelingWord = this.props.selectedWord
+    const feelingWord = this.props.feelingWord
     this.props.saveFeeling(description, sentiment, feelingWord, () => {
       this.props.questionAnswerUpdated("")
-      this.props.changeFeelingSection(null)
       this.props.navigation.goBack()
     })
   }
+
+feelingSentimentUpdated(value) {
+  if(value === 0) {
+    this.props.changeFeelingSentiment("Positive")
+  } else if(value === 1) {
+    this.props.changeFeelingSentiment("Negative")
+  }
+}
+
+
+
+
+formatQuestion(personName, feelingWord, selectedSentiment) {
+
+  const getFeelingWordStyle = (selectedSentiment) => {
+    if(selectedSentiment === "Positive") {
+      return {
+        "color" : "#307e48"
+      }
+    } else if(selectedSentiment === "Negative") {
+      return {
+        "color" : "#c33737"
+      }
+    } else {
+      return {
+        "color" : "#1A8299"
+      }
+    }
+  }
+
+
+  const emptyString = (str) => {
+    return !str || !str.trim().length
+  }
+
+  const formattedFeelingWord = () => {
+    return (<Text style={getFeelingWordStyle(selectedSentiment)}>{feelingWord}</Text>)
+  }
+
+  const formattedPersonName = () => {
+    return (<Text style={styles.personNameStyle}>{personName}</Text>)
+  }
+
+  if(emptyString(personName) && emptyString(feelingWord)) {
+    return (<Text>What has made you feel this way?</Text>)
+  }
+
+  if(emptyString(personName)) {
+    return (<Text>What has made you feel {formattedFeelingWord()}?</Text>)
+  }
+
+  if(emptyString(feelingWord)) {
+    return (<Text>What has {formattedPersonName()} done which made you feel this way?</Text>)
+  }
+
+  return(<Text>What has {formattedPersonName()} done which made you feel {formattedFeelingWord()}?</Text>)
+}
 
   render() {
     const {height, width} = Dimensions.get('window');
@@ -58,7 +114,7 @@ export default class DescribeFeeling extends React.Component {
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             Who is this feeling about?
           </Text>
-          <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={undefined} value={undefined} underlineColorAndroid="#1a8299"/>
+          <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
           <Text style={styles.questionText}>
             How do you feel?
           </Text>
@@ -70,7 +126,7 @@ export default class DescribeFeeling extends React.Component {
                 label: "Negative",
                 value: 1
               }
-            ]} formHorizontal={true} buttonColor={"#6D6D6D"} selectedButtonColor={"#1a8299"} labelColor={"black"} animation={false} initial={0} labelStyle={{
+            ]} formHorizontal={true} buttonColor={"#6D6D6D"} selectedButtonColor={"#1a8299"} labelColor={"black"} animation={false} initial={-1} labelStyle={{
               height: 22,
               fontSize: 18,
               color: "black"
@@ -79,18 +135,16 @@ export default class DescribeFeeling extends React.Component {
               paddingTop: 20,
               paddingBottom: 20,
               paddingRight: 40
-            }} onPress={(value) => {
-              this.setState({value: value})
-            }}/>
+            }} onPress={this.feelingSentimentUpdated.bind(this)}/>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             What Word Describes This Feeling?
           </Text>
-          <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={undefined} value={undefined} underlineColorAndroid="#1a8299"/>
+          <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
-            What has Liam done which made you feel encouraged?
+            {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment)}
           </Text>
-          <TextInput accessibilityLabel={"What has Liam done which made you feel encouraged?"} style={styles.questionAnswerMultilineInput} onChangeText={undefined} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
-          <Button style={styles.saveButton}>
+          <TextInput accessibilityLabel={"What has Liam done which made you feel encouraged?"} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
+          <Button style={styles.saveButton} onPress={this.savePressed.bind(this)}>
             Save
           </Button>
       </View>
@@ -127,5 +181,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     textAlignVertical: 'top'
+  },
+  personNameStyle: {
+    color: "#1A8299"
   }
 })
