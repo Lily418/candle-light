@@ -20,6 +20,7 @@ import {
 import Button from "react-native-button";
 import Icon from "react-native-vector-icons/FontAwesome"
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
+import Joi from "react-native-joi"
 
 export default class DescribeFeeling extends React.Component {
 
@@ -31,20 +32,71 @@ export default class DescribeFeeling extends React.Component {
     }
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
   componentDidMount() {
     this.props.navigation.setParams({ savePressed: this.savePressed.bind(this) })
+
+    this.props.personNameUpdated("")
+    this.props.changeFeelingSentiment(null)
+    this.props.feelingWordUpdated("")
 
     if(this.props.selectedPerson) {
       this.props.personNameUpdated(this.props.selectedPerson.name)
     }
   }
 
+  showError(errorKey, errorValue) {
+    this.setState({[errorKey]: errorValue})
+  }
+  
   savePressed() {
     const selectedPerson = this.props.selectedPerson
     const description = this.props.questionAnswer
     const sentiment = this.props.selectedSentiment
     const feelingWord = this.props.feelingWord
     const personName = this.props.personName
+
+    let feelingSchema = Joi.object().keys({
+      sentiment: Joi.any().valid("Positive", "Negative"),
+      feelingWord: Joi.string().min(1).max(20).required().label("Feeling Word"),
+      personName: Joi.string().min(1).max(28).label("Name")
+    })
+
+    const result = Joi.validate({sentiment, feelingWord, personName}, feelingSchema, {abortEarly: false})
+    this.setState({"nameError": ""})
+    this.setState({"sentimentError": ""})
+    this.setState({"feelingWordError": ""})
+
+    if(result.error) {
+      console.log(result.error)
+      result.error.details.forEach((error) => {
+        if(error.context.key === "sentiment") {
+          this.showError("sentimentError", "Please select a sentiment for this feeling")
+        }
+
+        if(error.context.key === "Feeling Word") {
+          if(error.type == "string.min" || error.type == "any.required") {
+            this.showError("feelingWordError", "Please add a word to describe this feeling")
+          } else {
+            this.showError("feelingWordError",  error.message)
+          }
+        }
+
+        if(error.context.key === "Name") {
+          if(error.type == "string.min") {
+            this.showError("nameError", "Please add a name to use for this new person")
+          } else {
+            this.showError("nameError",  error.message)
+          }
+        }
+      })
+
+      return
+    }
 
     const onComplete = () => {
       this.props.questionAnswerUpdated("")
@@ -66,7 +118,7 @@ feelingSentimentUpdated(value) {
   }
 }
 
-formatQuestion(personName, feelingWord, selectedSentiment) {
+formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
 
   const getFeelingWordStyle = (selectedSentiment) => {
     if(selectedSentiment === "Positive") {
@@ -98,18 +150,18 @@ formatQuestion(personName, feelingWord, selectedSentiment) {
   }
 
   if(emptyString(personName) && emptyString(feelingWord)) {
-    return (<Text>What has made you feel this way?</Text>)
+    return (rawString ? "What has made you feel this way?" : <Text>What has made you feel this way?</Text>)
   }
 
   if(emptyString(personName)) {
-    return (<Text>What has made you feel {formattedFeelingWord()}?</Text>)
+    return (rawString ? `What has made you feel ${feelingWord}` : <Text>What has made you feel {formattedFeelingWord()}?</Text>)
   }
 
   if(emptyString(feelingWord)) {
-    return (<Text>What has {formattedPersonName()} done which made you feel this way?</Text>)
+    return (rawString ? `What has ${personName} done which made you feel this way?` : <Text>What has {formattedPersonName()} done which made you feel this way?</Text>)
   }
 
-  return(<Text>What has {formattedPersonName()} done which made you feel {formattedFeelingWord()}?</Text>)
+  return(rawString ? `What has ${personName} done which made you feel ${feelingWord}?` : <Text>What has {formattedPersonName()} done which made you feel {formattedFeelingWord()}?</Text>)
 }
 
   render() {
@@ -119,12 +171,13 @@ formatQuestion(personName, feelingWord, selectedSentiment) {
         <View style={{
           backgroundColor: "white",
           padding: 10,
-          height: height - 30
+          height: height
         }}>
           { this.props.selectedPerson ? null : <View><Text style={styles.questionText} importantForAccessibility={"no"}>
                       Who is this feeling about?
                     </Text>
                     <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
+                    <Text style={styles.errorStyle}>{this.state.nameError ? this.state.nameError : " "}</Text>
                     </View>}
 
           <Text style={styles.questionText}>
@@ -146,17 +199,19 @@ formatQuestion(personName, feelingWord, selectedSentiment) {
             }} style={{
               justifyContent: "space-between",
               paddingTop: 20,
-              paddingBottom: 20,
               paddingRight: 40
             }} onPress={this.feelingSentimentUpdated.bind(this)}/>
+            <Text style={styles.errorStyle}>{this.state.sentimentError ? this.state.sentimentError : " "}</Text>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             What Word Describes This Feeling?
           </Text>
           <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
+          <Text style={styles.exampleFeelingWord}>{!this.props.selectedSentiment || this.props.selectedSentiment === "Positive" ? "Examples: Secure, Uplifited, Respected" : "Examples: Humiliated, Inadequate, Pressured"}</Text>
+          <Text style={styles.errorStyle}>{this.state.feelingWordError ? this.state.feelingWordError : " "}</Text>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
-            {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment)}
+            {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, false)}
           </Text>
-          <TextInput accessibilityLabel={"What has Liam done which made you feel encouraged?"} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
+          <TextInput accessibilityLabel={this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, true)} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} numberOfLines={10} value={undefined}/>
           <Button style={styles.saveButton} onPress={this.savePressed.bind(this)}>
             Save
           </Button>
@@ -178,24 +233,28 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     padding: 20,
-    margin: 20
   },
   questionText: {
     color: "black",
     fontSize: 20,
-    fontWeight: "bold",
-    margin: 2
+    fontWeight: "bold"
   },
   questionAnswerInput: {
     fontSize: 18
   },
   questionAnswerMultilineInput: {
-    paddingTop: 10,
     borderWidth: 1,
     borderColor: "black",
     textAlignVertical: 'top'
   },
   personNameStyle: {
     color: "#1A8299"
+  },
+  exampleFeelingWord: {
+    paddingLeft: 5,
+    paddingBottom: 10
+  },
+  errorStyle: {
+    color: "#c33737"
   }
 })
