@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "moment": "2.18.1",
-    "react": "16.1.0",
+    "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-button": "2.1.0",
+    "react-native-joi": "0.0.5",
+    "react-native-simple-radio-button": "^2.7.0",
     "react-native-vector-icons": "4.4.2",
     "react-navigation": "1.0.0-beta.19",
     "react-redux": "5.0.6",
@@ -26,7 +28,7 @@
     "eslint": "3.18.0",
     "eslint-plugin-react": "6.10.3",
     "jest": "19.0.2",
-    "react-test-renderer": "15.4.1"
+    "react-test-renderer": "16.1.1"
   },
   "jest": {
     "preset": "react-native"

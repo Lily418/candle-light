@@ -1,12 +1,15 @@
 import DescribeFeeling from '../components/DescribeFeeling'
 import { connect } from 'react-redux'
-import { questionAnswerUpdated, saveFeeling, changeFeelingSection  } from '../modules/feelings'
+import { questionAnswerUpdated, changeFeelingSentiment, personNameUpdated, feelingWordUpdated } from '../modules/feelings'
+import { createPerson, addFeelingToPerson } from '../modules/people'
 
 const mapStateToProps = (state) => {
   return {
-    'selectedWord' : state.feelings.selectedWord,
+    'selectedPerson' : state.people.selectedPerson,
     'selectedSentiment': state.feelings.selectedSentiment,
-    'questionAnswer': state.feelings.questionAnswer
+    'questionAnswer': state.feelings.questionAnswer,
+    'personName': state.feelings.personName,
+    'feelingWord': state.feelings.feelingWord
   }
 }
 
@@ -15,11 +18,20 @@ const mapDispatchToProps = (dispatch) => {
     questionAnswerUpdated: (questionAnswer) => {
       dispatch(questionAnswerUpdated(questionAnswer))
     },
-    changeFeelingSection: (newSection) => {
-      dispatch(changeFeelingSection(newSection))
+    personNameUpdated: (personName) => {
+      dispatch(personNameUpdated(personName))
     },
-    saveFeeling: (description, sentiment, feelingWord, onComplete) => {
-      dispatch(saveFeeling(description, sentiment, feelingWord, onComplete))
+    changeFeelingSentiment: (newSection) => {
+      dispatch(changeFeelingSentiment(newSection))
+    },
+    feelingWordUpdated: (feelingWord) => {
+      dispatch(feelingWordUpdated(feelingWord))
+    },
+    createPerson: (personName, description, sentiment, feelingWord, onComplete) => {
+      dispatch(createPerson(personName, description, sentiment, feelingWord, onComplete))
+    },
+    addFeelingToPerson: (person, description, sentiment, feelingWord, onComplete) => {
+      dispatch(addFeelingToPerson(person, description, sentiment, feelingWord, onComplete))
     }
   }
 }

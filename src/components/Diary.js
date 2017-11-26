@@ -116,6 +116,8 @@ export default class Diary extends React.Component {
   renderRow(itemCount, feelingRecord, sectionID, rowID) {
   
     const created = moment(feelingRecord.created)
+
+    console.log(feelingRecord.person)
     
     return (
       <TouchableOpacity onPress={this.openFeelingDetail.bind(this, feelingRecord)}>
@@ -128,6 +130,11 @@ export default class Diary extends React.Component {
           <Text accessibilityLabel={(feelingRecord.sentiment === "Positive" ? "Positive Feeling " : "Negative Feeling ") + feelingRecord.feelingWord} style={styles.feelingWordStyle}>
             {feelingRecord.feelingWord}
           </Text>
+          {feelingRecord.person[0] && 
+            <Text style={styles.personStyle}>
+              {feelingRecord.person[0].name}
+            </Text>}
+
           <Text importantForAccessibility='no' style={styles.feelingDescriptionStyle}>{created.format("hh:mma")}</Text>
           <Text accessibilityLabel={feelingRecord.description + ". item " + (parseInt(rowID) + 1) + " in list " + this.props.feelings.length + (this.props.feelings.length == 1 ? " item." : " items.")} style={styles.feelingDescriptionStyle}>
             {feelingRecord.description}
@@ -174,6 +181,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   feelingWordStyle: {
+    color: "white",
+    fontWeight: "100",
+    fontStyle: "italic",
+    fontSize: 16
+  },
+  personStyle: {
     color: "white",
     fontSize: 16
   },
