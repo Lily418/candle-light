@@ -16,35 +16,61 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 export default class PersonSummary extends React.Component {
-  render() {
-    return (
-      <View style={styles.personSummaryContainer}>
-        <Text style={styles.personName}>{this.props.person.name}</Text>
-        {  this.props.person && this.props.person.feelings.map((feeling, index) => {
-          return (<Text key={this.props.person.id + "-" + feeling.id}>{feeling.feelingWord}</Text>)
-        })
 
-          }
-        <Button containerStyle={styles.plusButton} onPress={this.props.addPressed}>
-          <Text style={styles.plusButtonText}>{"\uf067"/* Font awesome plus icon */}</Text>
-        </Button> 
-        
-      </View>
-    )
+  getFeelingWordStyle(feelingRecord) {
+    const baseFeelingRecordStyle = {
+      fontSize: 24
+
+    }
+
+    if(feelingRecord.sentiment === "Positive") {
+      return {
+        ...baseFeelingRecordStyle,
+        "color" : "#307e48"
+      }
+    } else if(feelingRecord.sentiment === "Negative") {
+      return {
+        ...baseFeelingRecordStyle,
+        "color" : "#c33737"
+      }
+    }
   }
+
+  render() {
+return (<View style={styles.personSummaryContainer}>
+  <Text style={styles.personName}>{this.props.person.name}</Text>
+  {
+    this.props.person.feelings && <View style={styles.feelingWordList}>
+        {
+          this.props.person.feelings.map((feeling, index) => {
+            return (<View key={`${this.props.person.id}-${feeling.id}-view`}>
+              <Text style={this.getFeelingWordStyle(feeling)}>{feeling.feelingWord}</Text>
+              <Text style={styles.feelingDescription}>{feeling.description}</Text>
+            </View>)
+          })
+        }
+      </View>
+  }
+
+  <Button containerStyle={styles.plusButton} onPress={this.props.addPressed}>
+    <Text style={styles.plusButtonText}>{"\uf067"/* Font awesome plus icon */}</Text>
+  </Button>
+
+</View>)
+}
 }
 
 const styles = StyleSheet.create({
   personName: {
     color: "black",
     fontSize: 26,
+    flex: 1,
     fontWeight: "bold"
   },
   personSummaryContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    alignItems: "center"
   },
   plusButton: {
     backgroundColor: "#1A8299",
@@ -57,5 +83,14 @@ const styles = StyleSheet.create({
   plusButtonText: {
     fontFamily: "FontAwesome",
     fontSize: 32,
-    color: "white"  }
+    color: "white"  
+  },
+ feelingWordList: {
+    flexDirection: "column",
+    flex: 2
+  },
+  feelingDescription: {
+    fontSize: 16,
+    color: "black"
+  }
 })
