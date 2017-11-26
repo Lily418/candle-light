@@ -1,15 +1,19 @@
 import People from '../components/People'
 import { connect } from 'react-redux'
-import { personSelected } from '../modules/feelings'
+import { personSelected, loadPeople } from '../modules/people'
 
 
 const mapStateToProps = (state) => {
   return {
+    people: state.people.people
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+      loadPeople: () => {
+        dispatch(loadPeople())
+      },
       personSelected: (personId) => {
         dispatch(personSelected(personId))
       }
