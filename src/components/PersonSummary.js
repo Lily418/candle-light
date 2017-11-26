@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    elevation: 2
   },
   plusButtonText: {
     fontFamily: "FontAwesome",
