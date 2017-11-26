@@ -19,10 +19,16 @@ export default class PersonSummary extends React.Component {
   render() {
     return (
       <View style={styles.personSummaryContainer}>
-        <Text style={styles.personName}>{this.props.personName}</Text>
+        <Text style={styles.personName}>{this.props.person.name}</Text>
+        {  this.props.person && this.props.person.feelings.map((feeling, index) => {
+          return (<Text key={this.props.person.id + "-" + feeling.id}>{feeling.feelingWord}</Text>)
+        })
+
+          }
         <Button containerStyle={styles.plusButton} onPress={this.props.addPressed}>
           <Text style={styles.plusButtonText}>{"\uf067"/* Font awesome plus icon */}</Text>
         </Button> 
+        
       </View>
     )
   }

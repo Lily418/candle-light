@@ -36,6 +36,43 @@ export const loadPeople = () => {
   }
 }
 
+const feelingRecordObject = (description, sentiment, feelingWord) => {
+  return {
+    id: uuid(),
+    description, sentiment, feelingWord,
+    created: moment().toDate(),
+  }
+}
+
+export const createPerson = (personName, description, sentiment, feelingWord, onComplete) => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const realm = state.realm.realm
+    realm.write(() => {
+      realm.create("Person", {
+        id: uuid(),
+        name: personName,
+        feelings: [feelingRecordObject(description, sentiment, feelingWord)],
+        created: moment().toDate(),
+      })
+    })
+
+    onComplete()
+  }
+}
+
+export const addFeelingToPerson = (person, description, sentiment, feelingWord, onComplete) => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const realm = state.realm.realm
+    realm.write(() => {
+      person.feelings.push(feelingRecordObject(description, sentiment, feelingWord))
+    })
+
+    onComplete()
+  }
+}
+
 export default function people(state = initialState, action = {}) {
   switch (action.type) {
     case SELECT_PERSON:

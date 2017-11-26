@@ -57,7 +57,7 @@ export const feelingWordUpdated = (feelingWord) => {
   }
 }
 
-export const saveFeeling = (description, sentiment, feelingWord, onComplete) => {
+/*export const saveFeeling = (description, sentiment, feelingWord, onComplete) => {
   return (dispatch, getState) => {
     const state = getState()
     const realm = state.realm.realm
@@ -71,7 +71,7 @@ export const saveFeeling = (description, sentiment, feelingWord, onComplete) => 
 
     onComplete()
   }
-}
+}*/
 
 const addIsNewDate = (feelingRecords) => {
   let previousCreated = null
