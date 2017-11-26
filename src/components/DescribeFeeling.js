@@ -33,16 +33,29 @@ export default class DescribeFeeling extends React.Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ savePressed: this.savePressed.bind(this) })
+
+    if(this.props.selectedPerson) {
+      this.props.personNameUpdated(this.props.selectedPerson.name)
+    }
   }
 
   savePressed() {
+    const selectedPerson = this.props.selectedPerson
     const description = this.props.questionAnswer
     const sentiment = this.props.selectedSentiment
     const feelingWord = this.props.feelingWord
-    this.props.saveFeeling(description, sentiment, feelingWord, () => {
+    const personName = this.props.personName
+
+    const onComplete = () => {
       this.props.questionAnswerUpdated("")
       this.props.navigation.goBack()
-    })
+    }
+    
+    if(!selectedPerson) {
+      this.props.createPerson(personName, description, sentiment, feelingWord, onComplete)
+    } else {
+      this.props.addFeelingToPerson(selectedPerson, description, sentiment, feelingWord, onComplete)
+    }
   }
 
 feelingSentimentUpdated(value) {
@@ -52,9 +65,6 @@ feelingSentimentUpdated(value) {
     this.props.changeFeelingSentiment("Negative")
   }
 }
-
-
-
 
 formatQuestion(personName, feelingWord, selectedSentiment) {
 
@@ -111,13 +121,16 @@ formatQuestion(personName, feelingWord, selectedSentiment) {
           padding: 10,
           height: height - 30
         }}>
-          <Text style={styles.questionText} importantForAccessibility={"no"}>
-            Who is this feeling about?
-          </Text>
-          <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
+          { this.props.selectedPerson ? null : <View><Text style={styles.questionText} importantForAccessibility={"no"}>
+                      Who is this feeling about?
+                    </Text>
+                    <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
+                    </View>}
+
           <Text style={styles.questionText}>
-            How do you feel?
+              How do you feel?
           </Text>
+
           <RadioForm radio_props={[
               {
                 label: "Positive",

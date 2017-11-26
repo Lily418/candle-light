@@ -34,8 +34,8 @@ export default class People extends React.Component {
     this.props.loadPeople()
   }
 
-  addPressed(personId) {
-    this.props.personSelected(personId)
+  addPressed(person) {
+    this.props.personSelected(person)
     this.props.navigation.navigate('DescribeFeeling')
   }
   
@@ -44,11 +44,8 @@ export default class People extends React.Component {
       <View accessibilityLabel={"People"} style={styles.container}>
         <Quote />
 
-        <PersonSummary personName={"Add Person"} addPressed={this.addPressed.bind(this, null)}/>
-        { this.props.people.map(person => <PersonSummary personName={person.name} addPressed={this.addPressed.bind(this, person)} />
-)
-
-        }
+        <PersonSummary person={{name: "Add Person", feelings: []}} addPressed={this.addPressed.bind(this, null)}/>
+        { this.props.people.map(person => <PersonSummary key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />) }
       </View>
     )
   }
