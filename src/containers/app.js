@@ -40,7 +40,7 @@ const MainTabs = TabNavigator({
 })
 
 const MainStack = StackNavigator({
-  Home: { screen: People },
+  Home: { screen: MainTabs },
   DescribeFeeling: { screen : DescribeFeeling },
   DetailFeeling: { screen: DetailFeeling }
   
