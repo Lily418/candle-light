@@ -44,7 +44,7 @@ export default class People extends React.Component {
       <View accessibilityLabel={"People"} style={styles.container}>
         <Quote />
 
-        <PersonSummary person={{name: "Add Person", feelings: []}} addPressed={this.addPressed.bind(this, null)}/>
+        <PersonSummary person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/>
         { this.props.people.map(person => <PersonSummary key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />) }
       </View>
     )
@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    padding: 10
   }
 })
