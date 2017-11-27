@@ -13,6 +13,7 @@
     "react-native": "0.50.3",
     "react-native-button": "2.1.0",
     "react-native-joi": "0.0.5",
+    "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-simple-radio-button": "^2.7.0",
     "react-native-vector-icons": "4.4.2",
     "react-navigation": "1.0.0-beta.19",
