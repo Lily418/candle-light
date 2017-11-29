@@ -5,9 +5,8 @@ Candlelight is an application to support people recovering from abusive relation
 
 ## Releases
 
-Candlelight is avaliable on the [Google Play Store](https://play.google.com/apps/testing/com.candlelight)
-
-Also on the [iOS App Store](https://itunes.apple.com/us/app/candlelight/id1313537943) 
+- [Google Play Store](https://play.google.com/apps/testing/com.candlelight)
+- [iOS App Store](https://itunes.apple.com/us/app/candlelight/id1313537943) 
 
 ## New Designs
 These are new designs for the second version I'm currently building based on feedback from the first version
