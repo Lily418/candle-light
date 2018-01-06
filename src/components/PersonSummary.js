@@ -8,7 +8,8 @@ import React from "react"
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from "react-native"
 
 import Button from 'react-native-button'
@@ -37,30 +38,51 @@ export default class PersonSummary extends React.Component {
   }
 
   render() {
-return (<View style={styles.personSummaryContainer}>
-  <Text style={styles.personName}>{this.props.person.name}</Text>
-  {
-    this.props.person.feelings && <View style={styles.feelingWordList}>
-        {
-          this.props.person.feelings.map((feeling, index) => {
-            return (<View key={`${this.props.person.id}-${feeling.id}-view`}>
-              <Text style={this.getFeelingWordStyle(feeling)}>{feeling.feelingWord}</Text>
-              <Text style={styles.feelingDescription}>{feeling.description}</Text>
-            </View>)
-          })
-        }
-      </View>
-  }
+  const listItemAccessiblityLabel = this.props.rowID ? `${this.props.person.name}. item ${parseInt(this.props.rowID) + 1} in list ${this.props.listLength} ${this.props.listLength == 1 ? " item." : " items."}` : this.props.person.name
 
-  <Button containerStyle={styles.plusButton} onPress={this.props.addPressed}>
+const personSummary = (
+    
+  <View style={styles.personSummary} accessibilityLabel={listItemAccessiblityLabel}>
+  <View style={styles.personSummaryContainer}>
+  <Text accessibilityLabel={this.props.person.name} style={styles.personName}>{this.props.person.name}</Text>
+  
+  { // If this is an add person element we will wrap it in TouchableOpacity later so we don't need to wrap it in a button
+  this.props.isAddPerson ?       <View style={styles.plusButton}><Text style={styles.plusButtonText}>{"\uf067"/* Font awesome plus icon */}</Text></View>
+: <Button containerStyle={styles.plusButton} onPress={this.props.addPressed} accessibilityLabel={this.props.isAddPerson ? "Add Person" : `Add feeling about ${this.props.person.name}`}>
     <Text style={styles.plusButtonText}>{"\uf067"/* Font awesome plus icon */}</Text>
-  </Button>
-
-</View>)
+  </Button>}
+</View>
+{
+  this.props.person.feelings && <View style={styles.feelingWordList}>
+      {
+        this.props.person.feelings.map((feeling, index) => {
+          return (<View key={`${this.props.person.id}-${feeling.id}-view`} accessible={true} accessibilityLabel={`${feeling.feelingWord} ${feeling.description}`}>
+            <Text style={this.getFeelingWordStyle(feeling)}>{feeling.feelingWord}</Text>
+            <Text style={styles.feelingDescription}>{feeling.description}</Text>
+          </View>)
+        })
+      }
+    </View>
 }
+</View>)
+
+    if(this.props.isAddPerson) {
+      return (
+        <TouchableOpacity onPress={this.props.addPressed} accessibilityLabel={"Add Person"} accessibilityTraits="button" accessibilityComponentType="button">
+          { personSummary }
+        </TouchableOpacity>
+      )
+    } else {
+      return personSummary
+    }
+
+  }
 }
 
 const styles = StyleSheet.create({
+  personSummary: {
+    padding: 10
+  },
   personName: {
     color: "black",
     fontSize: 26,
@@ -70,7 +92,6 @@ const styles = StyleSheet.create({
   personSummaryContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
   },
   plusButton: {
     backgroundColor: "#1A8299",

@@ -11,7 +11,7 @@
     "moment": "2.18.1",
     "react": "16.0.0",
     "react-native": "0.50.3",
-    "react-native-button": "2.1.0",
+    "react-native-button": "2.2.0",
     "react-native-joi": "0.0.5",
     "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-simple-radio-button": "^2.7.0",

@@ -41,7 +41,7 @@ export default class People extends React.Component {
   }
 
   renderRow(person, sectionID, rowID) {
-    return (<PersonSummary key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />)
+    return (<PersonSummary rowID={rowID} listLength={this.props.people.length} key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />)
   }
   
   render() {
@@ -57,7 +57,7 @@ export default class People extends React.Component {
           renderHeader={() => 
             <View>
               <Quote /> 
-              <PersonSummary person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/> 
+              <PersonSummary isAddPerson={true} person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/> 
           </View>}
           renderRow={this.renderRow.bind(this)}
         />
