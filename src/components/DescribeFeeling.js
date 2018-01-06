@@ -208,8 +208,8 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
             What Word Describes This Feeling?
           </Text>
           <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
-          <Text style={styles.exampleFeelingWord}>{!this.props.selectedSentiment || this.props.selectedSentiment === "Positive" ? "Examples: Secure, Uplifited, Respected" : "Examples: Humiliated, Inadequate, Pressured"}</Text>
-          <Text style={styles.errorStyle}>{this.state.feelingWordError ? this.state.feelingWordError : " "}</Text>
+          <Text style={styles.exampleFeelingWord}>{!this.props.selectedSentiment || this.props.selectedSentiment === "Positive" ? "Examples: Secure, Uplifted, Respected" : "Examples: Humiliated, Inadequate, Pressured"}</Text>
+          <Text style={styles.errorStyle}>{this.state.feelingWordError ? this.state.feelingWordError : ""}</Text>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, false)}
           </Text>
