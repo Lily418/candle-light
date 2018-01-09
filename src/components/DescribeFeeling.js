@@ -165,6 +165,10 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
   return(rawString ? `What has ${personName} done which made you feel ${feelingWord}?` : <Text>What has {formattedPersonName()} done which made you feel {formattedFeelingWord()}?</Text>)
 }
 
+  exampleFeelingWords() {
+    return !this.props.selectedSentiment || this.props.selectedSentiment === "Positive" ? "Examples: Secure, Uplifted, Respected" : "Examples: Humiliated, Inadequate, Pressured"
+  }
+
   render() {
     return (
       <View style={{
@@ -176,13 +180,13 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
           backgroundColor: "white",
           padding: 10
         }}>
-          { this.props.selectedPerson ? null : <View><Text style={styles.questionText} importantForAccessibility={"no"}>
+          { this.props.selectedPerson ? null : <View><Text accessible={false} style={styles.questionText}>
                       Who is this feeling about?
                     </Text>
                     <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
-                    <Text style={styles.errorStyle}>{this.state.nameError ? this.state.nameError : ""}</Text>
+                    { this.state.nameError ? <Text style={styles.errorStyle}>{this.state.nameError}</Text> : null }
                     </View>}
-
+          <View accessible={true}>
           <Text style={styles.questionText}>
               How do you feel?
           </Text>
@@ -205,14 +209,15 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
               paddingRight: 40
             }} 
             onPress={this.feelingSentimentUpdated.bind(this)}/>
-            <Text style={styles.errorStyle}>{this.state.sentimentError ? this.state.sentimentError : ""}</Text>
-          <Text style={styles.questionText} importantForAccessibility={"no"}>
+          </View>
+            { this.state.sentimentError ? <Text style={styles.errorStyle}>{this.state.sentimentError}</Text> : null}
+          <Text style={styles.questionText} accessible={false}>
             What Word Describes This Feeling?
           </Text>
-          <TextInput accessibilityLabel="What Word Describes This Feeling?" style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
-          <Text style={styles.exampleFeelingWord}>{!this.props.selectedSentiment || this.props.selectedSentiment === "Positive" ? "Examples: Secure, Uplifted, Respected" : "Examples: Humiliated, Inadequate, Pressured"}</Text>
-          <Text style={styles.errorStyle}>{this.state.feelingWordError ? this.state.feelingWordError : ""}</Text>
-          <Text style={styles.questionText} importantForAccessibility={"no"}>
+          <TextInput accessibilityLabel={`What Word Describes This Feeling? ${this.exampleFeelingWords.bind(this)()}`} style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
+          <Text accessible={false} style={styles.exampleFeelingWord}>{this.exampleFeelingWords.bind(this)()}</Text>
+          { this.state.feelingWordError ? <Text style={styles.errorStyle}>{this.state.feelingWordError}</Text> : null}
+          <Text style={styles.questionText} accessible={false}>
             {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, false)}
           </Text>
           <TextInput accessibilityLabel={this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, true)} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} value={this.props.questionAnswer}/>
