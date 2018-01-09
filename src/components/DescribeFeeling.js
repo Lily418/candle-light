@@ -179,7 +179,7 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
                       Who is this feeling about?
                     </Text>
                     <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
-                    <Text style={styles.errorStyle}>{this.state.nameError ? this.state.nameError : " "}</Text>
+                    <Text style={styles.errorStyle}>{this.state.nameError ? this.state.nameError : ""}</Text>
                     </View>}
 
           <Text style={styles.questionText}>
@@ -202,8 +202,9 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
               justifyContent: "space-between",
               paddingTop: 20,
               paddingRight: 40
-            }} onPress={this.feelingSentimentUpdated.bind(this)}/>
-            <Text style={styles.errorStyle}>{this.state.sentimentError ? this.state.sentimentError : " "}</Text>
+            }} 
+            onPress={this.feelingSentimentUpdated.bind(this)}/>
+            <Text style={styles.errorStyle}>{this.state.sentimentError ? this.state.sentimentError : ""}</Text>
           <Text style={styles.questionText} importantForAccessibility={"no"}>
             What Word Describes This Feeling?
           </Text>
