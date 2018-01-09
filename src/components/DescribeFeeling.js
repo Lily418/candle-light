@@ -169,6 +169,7 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
     return (
       <View style={{
         backgroundColor: "white",
+        flex:1
       }}>
       <KeyboardAwareScrollView extraScrollHeight={50} enableOnAndroid={true}> 
         <View style={{
@@ -246,12 +247,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   questionAnswerInput: {
-    fontSize: 18
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: "black",
+    padding: 5,
+    marginTop: 5,
+    marginBottom: 10
+
   },
   questionAnswerMultilineInput: {
     borderWidth: 1,
     borderColor: "black",
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
+    minHeight: 100,
+    marginTop: 5,
+    padding: 5
   },
   personNameStyle: {
     color: "#1A8299"
