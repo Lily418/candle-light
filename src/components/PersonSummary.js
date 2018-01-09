@@ -38,7 +38,7 @@ export default class PersonSummary extends React.Component {
   }
 
   render() {
-  const listItemAccessiblityLabel = this.props.rowID ? `${this.props.person.name}. item ${parseInt(this.props.rowID) + 1} in list ${this.props.listLength} ${this.props.listLength == 1 ? " item." : " items."}` : this.props.person.name
+  const listItemAccessiblityLabel = this.props.index ? `${this.props.person.name}. item ${parseInt(this.props.index) + 1} in list ${this.props.listLength} ${this.props.listLength == 1 ? " item." : " items."}` : this.props.person.name
 
 const personSummary = (
     

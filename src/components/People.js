@@ -9,9 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   Dimensions,
-  ListView,
+  FlatList,
   Platform
 } from "react-native"
 
@@ -41,26 +40,22 @@ export default class People extends React.Component {
     this.props.navigation.navigate('DescribeFeeling')
   }
 
-  renderRow(person, sectionID, rowID) {
-    return (<PersonSummary rowID={rowID} listLength={this.props.people.length} key={person.id} person={person} addPressed={this.addPressed.bind(this, person)} />)
+  renderItem(person, index) {
+    return (<PersonSummary index={index} listLength={this.props.people.length} key={person.item.id} person={person.item} addPressed={this.addPressed.bind(this, person.item)} />)
   }
   
   render() {
-    
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const peopleDataSource = ds.cloneWithRows(this.props.people)
-
     return (
       <View accessibilityLabel={"People"} style={styles.container}>
-        <ListView
-          enableEmptySections={true}
-          dataSource={peopleDataSource}
-          renderHeader={() => 
+        <FlatList
+          data={this.props.people}
+          ListHeaderComponent={() => 
             <View>
               <Quote /> 
               <PersonSummary isAddPerson={true} person={{name: "Add Person"}} addPressed={this.addPressed.bind(this, null)}/> 
           </View>}
-          renderRow={this.renderRow.bind(this)}
+          renderItem={this.renderItem.bind(this)}
+          keyExtractor={(item, index) => item.id}
         />
       </View>
     )
