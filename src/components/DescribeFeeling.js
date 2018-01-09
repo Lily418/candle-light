@@ -14,7 +14,7 @@ import {
   Platform,
   Button as VanillaButton,
   KeyboardAvoidingView,
-  Dimensions
+  Dimensions,
 } from "react-native"
 
 import Button from "react-native-button";
@@ -215,9 +215,11 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
             {this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, false)}
           </Text>
           <TextInput accessibilityLabel={this.formatQuestion(this.props.personName, this.props.feelingWord, this.props.selectedSentiment, true)} style={styles.questionAnswerMultilineInput} onChangeText={this.props.questionAnswerUpdated.bind(this)} underlineColorAndroid="transparent" multiline={true} value={this.props.questionAnswer}/>
-          <Button style={styles.saveButton} onPress={this.savePressed.bind(this)}>
-            Save
-          </Button>
+          {Platform.OS === "android" ? 
+                    <Button style={styles.saveButton} onPress={this.savePressed.bind(this)}>
+                      Save
+                    </Button> : null}
+
       </View>
       </KeyboardAwareScrollView>
       </View>
