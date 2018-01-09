@@ -25,6 +25,7 @@ import PersonSummary from './PersonSummary'
 export default class People extends React.Component {
 
   static navigationOptions = {
+    headerTitle: "People",
     tabBarLabel: 'People',
     tabBarIcon: ({ tintColor }) => {
       return <Icon name="users" size={20} color={tintColor} />
