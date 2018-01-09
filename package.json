@@ -16,7 +16,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-simple-radio-button": "git@github.com:Lily418/react-native-simple-radio-button.git",
     "react-native-vector-icons": "4.4.2",
-    "react-navigation": "1.0.0-beta.19",
+    "react-navigation": "1.0.0-beta.23",
     "react-redux": "5.0.6",
     "realm": "2.0.6",
     "redux": "3.6.0",
