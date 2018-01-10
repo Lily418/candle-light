@@ -15,6 +15,7 @@ import {
   Button as VanillaButton,
   KeyboardAvoidingView,
   Dimensions,
+  SegmentedControlIOS
 } from "react-native"
 
 import Button from "react-native-button";
@@ -42,7 +43,8 @@ export default class DescribeFeeling extends React.Component {
     this.props.navigation.setParams({ savePressed: this.savePressed.bind(this) })
 
     this.props.personNameUpdated("")
-    this.props.changeFeelingSentiment(null)
+    //On iOS segment control has at least one preselected value
+    this.props.changeFeelingSentiment(Platform.OS === "android" ? null : "Positive")
     this.props.feelingWordUpdated("")
 
     if(this.props.selectedPerson) {
@@ -186,29 +188,36 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
                     <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
                     { this.state.nameError ? <Text style={styles.errorStyle}>{this.state.nameError}</Text> : null }
                     </View>}
-          <View accessible={true}>
+          <View>
           <Text style={styles.questionText}>
               How do you feel?
           </Text>
+          {Platform.OS === "android" ?           <RadioForm radio_props={[
+                        {
+                          label: "Positive",
+                          value: 0
+                        }, {
+                          label: "Negative",
+                          value: 1
+                        }
+                      ]} formHorizontal={true} buttonColor={"#6D6D6D"} selectedButtonColor={"#1a8299"} labelColor={"black"} animation={false} initial={-1} labelStyle={{
+                        height: 22,
+                        fontSize: 18,
+                        color: "black"
+                      }} style={{
+                        justifyContent: "space-between",
+                        paddingTop: 20,
+                        paddingRight: 40
+                      }} 
+                      onPress={this.feelingSentimentUpdated.bind(this)}/> :              
+                      <SegmentedControlIOS values={["Positive", "Negative"]} 
+                                            selectedIndex={this.props.selectedSentiment == "Negative" ? 1 : 0}
+                                            onChange={(event) => { this.feelingSentimentUpdated.bind(this)(event.nativeEvent.selectedSegmentIndex)}} 
+                                            style={{marginTop: 10, marginBottom: 20}}
+                                            />
+                      
+      }
 
-          <RadioForm radio_props={[
-              {
-                label: "Positive",
-                value: 0
-              }, {
-                label: "Negative",
-                value: 1
-              }
-            ]} formHorizontal={true} buttonColor={"#6D6D6D"} selectedButtonColor={"#1a8299"} labelColor={"black"} animation={false} initial={-1} labelStyle={{
-              height: 22,
-              fontSize: 18,
-              color: "black"
-            }} style={{
-              justifyContent: "space-between",
-              paddingTop: 20,
-              paddingRight: 40
-            }} 
-            onPress={this.feelingSentimentUpdated.bind(this)}/>
           </View>
             { this.state.sentimentError ? <Text style={styles.errorStyle}>{this.state.sentimentError}</Text> : null}
           <Text style={styles.questionText} accessible={false}>
