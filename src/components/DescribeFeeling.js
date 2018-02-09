@@ -185,7 +185,7 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
           { this.props.selectedPerson ? null : <View><Text accessible={false} style={styles.questionText}>
                       Who is this feeling about?
                     </Text>
-                    <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="#1a8299"/>
+                    <TextInput accessibilityLabel="Who is this feeling about?" style={styles.questionAnswerInput} onChangeText={this.props.personNameUpdated} value={this.props.personName} underlineColorAndroid="transparent"/>
                     { this.state.nameError ? <Text style={styles.errorStyle}>{this.state.nameError}</Text> : null }
                     </View>}
           <View>
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     padding: 20,
+    marginTop:10
   },
   questionText: {
     color: "black",
