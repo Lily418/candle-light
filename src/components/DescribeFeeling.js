@@ -223,7 +223,7 @@ formatQuestion(personName, feelingWord, selectedSentiment, rawString) {
           <Text style={styles.questionText} accessible={false}>
             What Word Describes This Feeling?
           </Text>
-          <TextInput accessibilityLabel={`What Word Describes This Feeling? ${this.exampleFeelingWords.bind(this)()}`} style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="#1a8299"/>
+          <TextInput accessibilityLabel={`What Word Describes This Feeling? ${this.exampleFeelingWords.bind(this)()}`} style={styles.questionAnswerInput} onChangeText={this.props.feelingWordUpdated.bind(this)} value={this.props.feelingWord} underlineColorAndroid="transparent"/>
           <Text accessible={false} style={styles.exampleFeelingWord}>{this.exampleFeelingWords.bind(this)()}</Text>
           { this.state.feelingWordError ? <Text style={styles.errorStyle}>{this.state.feelingWordError}</Text> : null}
           <Text style={styles.questionText} accessible={false}>
@@ -266,8 +266,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     padding: 5,
     marginTop: 5,
-    marginBottom: 10
-
+    marginBottom: 10,
   },
   questionAnswerMultilineInput: {
     borderWidth: 1,
